@@ -1,11 +1,12 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import ReactGanttChart from './ReactGanttChart';
-import { ProductsDataType } from './type/type';
+import ReactGanttChart from './react-gantt-chart';
+import JapaneseHolidays from 'japanese-holidays';
+import { HeadRowsDataType } from './type/type';
 
-const products: ProductsDataType[] = [
+const products: HeadRowsDataType[] = [
   {
-    productName: 'test',
+    name: 'test',
     data: [
       { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30) },
       { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12) },
@@ -13,7 +14,7 @@ const products: ProductsDataType[] = [
     ],
   },
   {
-    productName: 'test',
+    name: 'test',
     data: [
       { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30) },
       { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12) },
@@ -21,7 +22,7 @@ const products: ProductsDataType[] = [
     ],
   },
   {
-    productName: 'test',
+    name: 'test',
     data: [
       { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30) },
       { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12) },
@@ -29,7 +30,7 @@ const products: ProductsDataType[] = [
     ],
   },
   {
-    productName: 'test',
+    name: 'test',
     data: [
       { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30) },
       { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12) },
@@ -39,7 +40,14 @@ const products: ProductsDataType[] = [
 ];
 
 const option = {
-  showMonth: 3,
+  showMonth: 4,
+  isHoliday: (date:Date) :string | undefined => {
+    return JapaneseHolidays.isHoliday(date)
+  },
+  yearLetter: '年',
+  monthLetter: '月',
+  pagingPrevLetter: 'ヵ月前',
+  pagingNextLetter: 'ヵ月後'  
 };
 
 ReactDOM.render(

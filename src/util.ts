@@ -6,8 +6,6 @@ import {
   isSunday,
   isSaturday,
 } from 'date-fns';
-import JapaneseHolidays from 'japanese-holidays';
-import { CHART_COLOR, DAY_COLOR } from '../config';
 
 export const getIntervalDate = (start: number, end: number): Date[] => {
   const currentDate = new Date();
@@ -22,7 +20,7 @@ export const getIntervalDate = (start: number, end: number): Date[] => {
   return intervalDate;
 };
 
-export const getChartColor = (i: number): string => {
+export const getChartColor = (i: number, CHART_COLOR: { [key: string]: string }): string => {
   const num: number = i % Object.keys(CHART_COLOR).length;
   switch (num) {
     case 0:
@@ -39,9 +37,9 @@ export const getChartColor = (i: number): string => {
   }
 };
 
-export const getDayColor = (date: Date): string => {
+export const getDayColor = (date: Date, isHoliday: (date: Date) => string | undefined , DAY_COLOR: { [key: string]: string } ) => {
   if (isToday(date)) return DAY_COLOR.TODAY;
-  if (isSunday(date) || JapaneseHolidays.isHoliday(date))
+  if (isSunday(date) || isHoliday(date))
     return DAY_COLOR.HOLIDAY;
   if (isSaturday(date)) return DAY_COLOR.SATURDAY;
   return 'none';
