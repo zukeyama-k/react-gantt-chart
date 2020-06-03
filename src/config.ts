@@ -1,8 +1,9 @@
-export const WEEK_JA = ['日', '月', '火', '水', '木', '金', '土'];
+
 export const CELLWIDTH = 30;
-export const PAGING = 3;
-export const SHOWMONTH = 3;
+
 export const CHARTMARGIN = 15;
+
+export const SHOWMONTH = 3;
 
 export enum CHART_COLOR {
   PINK = '#eac5d1',

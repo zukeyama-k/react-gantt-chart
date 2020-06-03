@@ -1,12 +1,15 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { Head, FlexRow } from './utilComponents';
-import { ProductsDataType } from '../type/type';
+import { HeadRowsDataType } from '../type/type';
+import { Options } from '../react-gantt-chart';
 
-export interface ProductRowsType {
-  rows: ProductsDataType[];
+export interface HeadRowsDataTypes {
+  rows: HeadRowsDataType[];
 }
 
-const ProductRows: React.FC<ProductRowsType> = ({ rows }) => {
+const HeadRows: React.FC<HeadRowsDataTypes> = ({ rows }) => {
+  const option = useContext(Options);
+
   return (
     <>
       <Head>&nbsp;</Head>
@@ -18,19 +21,19 @@ const ProductRows: React.FC<ProductRowsType> = ({ rows }) => {
           height: '50px',
         }}
       >
-        商品
+        {option.headTitle}
       </FlexRow>
-      {rows.map((row: ProductsDataType, i: number) => (
+      {rows.map((row: HeadRowsDataType, i: number) => (
         <FlexRow
           index={i + 1}
           key={i}
           style={{ padding: '5px 15px', fontSize: '20px', color: '#67ad95' }}
         >
-          {row.productName}
+          {row.name}
         </FlexRow>
       ))}
     </>
   );
 };
 
-export default ProductRows;
+export default HeadRows;

@@ -1,11 +1,10 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { format as formatDate } from 'date-fns';
 import Styled from 'styled-components';
-import { PAGING } from '../config';
+
+import { Options } from '../react-gantt-chart';
 
 interface PagingType {
-  prevText?: string;
-  nextText?: string;
   set: (state: [number, number]) => void;
   value: [number, number];
 }
@@ -20,29 +19,26 @@ const Button = Styled.button`
 
 const Paging: React.FC<PagingType> = ({
   set,
-  value,
-  prevText = 'ヶ月前へ',
-  nextText = 'ヶ月後へ',
+  value
 }) => {
+  const option = useContext(Options);
   const [start, end] = value;
   const prev = (): void => {
-    set([start - PAGING, end]);
+    set([start - option.showMonth, end]);
   };
   const next = (): void => {
-    set([start + PAGING, end]);
+    set([start + option.showMonth, end]);
   };
   return (
     <div
       style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}
     >
       <Button onClick={prev}>
-        {PAGING}
-        {prevText}
+        {option.getPagingPrevLetter(option.showMonth)}
       </Button>
-      <div>｜{formatDate(new Date(), 'yyyy年MM月dd日')}｜</div>
+      <div>｜{formatDate(new Date(), option.currentFormat)}｜</div>
       <Button onClick={next}>
-        {PAGING}
-        {nextText}
+        {option.getPagingNextLetter(option.showMonth)}
       </Button>
     </div>
   );

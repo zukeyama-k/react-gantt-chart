@@ -1,21 +1,23 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { format as formatDate, differenceInCalendarDays } from 'date-fns';
 import { CELLWIDTH, CHARTMARGIN } from '../config';
-import { getChartColor } from '../util';
 import { Schedule } from './utilComponents';
 import Row from './Row';
-import { ProductsDataType, Data } from '../type/type';
+import { HeadRowsDataType, Data } from '../type/type';
+import { Options } from '../react-gantt-chart';
 
 interface RowsType {
   intervalDate: Date[];
-  data: ProductsDataType[];
+  data: HeadRowsDataType[];
 }
 
 const Rows: React.FC<RowsType> = ({ intervalDate, data }) => {
   const [firstDay] = intervalDate;
+  const option = useContext(Options);
+
   return (
     <>
-      {data.map((productsData: ProductsDataType, i: number) => {
+      {data.map((productsData: HeadRowsDataType, i: number) => {
         return (
           <Row
             key={i}
@@ -31,7 +33,7 @@ const Rows: React.FC<RowsType> = ({ intervalDate, data }) => {
                   key={i}
                   width={`${endDay * CELLWIDTH}px`}
                   left={`${startDay * CELLWIDTH + CHARTMARGIN}px`}
-                  backgroundColor={getChartColor(i)}
+                  backgroundColor={option.getChartColor(i)}
                 >
                   <span
                     style={{

@@ -1,8 +1,9 @@
-import * as React from 'react';
-import { endOfMonth } from 'date-fns';
+import React, { useContext } from 'react';
+import { endOfMonth, format } from 'date-fns';
 import { CELLWIDTH } from '../config';
 import { Head } from './utilComponents';
 import Row from './Row';
+import { Options } from '../react-gantt-chart';
 
 interface DaysType {
   days: { [key: number]: Date };
@@ -10,6 +11,8 @@ interface DaysType {
 }
 
 const Days: React.FC<DaysType> = ({ days, data }) => {
+  const option = useContext(Options);
+
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ flex: '1 1 auto' }}>
@@ -26,7 +29,7 @@ const Days: React.FC<DaysType> = ({ days, data }) => {
                     width,
                   }}
                 >
-                  {`${monthNum}月`}
+                {format(month, option.headFormat, { locale: option.locale})}
                 </Head>
               );
             }
