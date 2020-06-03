@@ -21,26 +21,24 @@ const Paging: React.FC<PagingType> = ({
   set,
   value
 }) => {
-  const o = useContext(Options);
+  const option = useContext(Options);
   const [start, end] = value;
   const prev = (): void => {
-    set([start - o.showMonth, end]);
+    set([start - option.showMonth, end]);
   };
   const next = (): void => {
-    set([start + o.showMonth, end]);
+    set([start + option.showMonth, end]);
   };
   return (
     <div
       style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}
     >
       <Button onClick={prev}>
-        {o.showMonth}
-        {o.pagingPrevLetter}
+        {option.getPagingPrevLetter(option.showMonth)}
       </Button>
-      <div>｜{formatDate(new Date(), 'yyyy年MM月dd日')}｜</div>
+      <div>｜{formatDate(new Date(), option.currentFormat)}｜</div>
       <Button onClick={next}>
-        {o.showMonth}
-        {o.pagingNextLetter}
+        {option.getPagingNextLetter(option.showMonth)}
       </Button>
     </div>
   );

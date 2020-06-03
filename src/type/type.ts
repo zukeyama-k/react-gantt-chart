@@ -1,3 +1,34 @@
+export type Locale = {
+  code?: string,
+  formatDistance?: (...args: Array<any>) => any,
+  formatRelative?: (...args: Array<any>) => any,
+  localize?: {
+    ordinalNumber: (...args: Array<any>) => any,
+    era: (...args: Array<any>) => any,
+    quarter: (...args: Array<any>) => any,
+    month: (...args: Array<any>) => any,
+    day: (...args: Array<any>) => any,
+    dayPeriod: (...args: Array<any>) => any
+  },
+  formatLong?: {
+    date: (...args: Array<any>) => any,
+    time: (...args: Array<any>) => any,
+    dateTime: (...args: Array<any>) => any
+  },
+  match?: {
+    ordinalNumber: (...args: Array<any>) => any,
+    era: (...args: Array<any>) => any,
+    quarter: (...args: Array<any>) => any,
+    month: (...args: Array<any>) => any,
+    day: (...args: Array<any>) => any,
+    dayPeriod: (...args: Array<any>) => any
+  },
+  options?: {
+    weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6,
+    firstWeekContainsDate?: 1 | 2 | 3 | 4 | 5 | 6 | 7
+  }
+}
+
 export type Data = { start: Date; end: Date };
 
 export interface HeadRowsDataType {
@@ -18,13 +49,12 @@ export interface RootProps {
 
 export interface DefaultOptionsType {
   showMonth: number;
-  isHoliday: (date: Date) => string | undefined,
-  WEEK_JA: string[],
-  CHART_COLOR: { [key: string]: string },
-  DAY_COLOR:{ [key: string]: string },
-  headTitle: string,
-  yearLetter: string,
-  monthLetter: string,
-  pagingPrevLetter: string,
-  pagingNextLetter: string
+  headTitle: string;
+  locale: Locale;
+  headFormat: string;
+  currentFormat: string;
+  getDayColor: (date: Date) => string;
+  getChartColor: (i: number) => string;
+  getPagingPrevLetter: (month: number) => string;
+  getPagingNextLetter: (month: number) => string;  
 }

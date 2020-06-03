@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { endOfMonth } from 'date-fns';
+import { endOfMonth, format } from 'date-fns';
 import { CELLWIDTH } from '../config';
 import { Head } from './utilComponents';
 import Row from './Row';
@@ -11,7 +11,7 @@ interface DaysType {
 }
 
 const Days: React.FC<DaysType> = ({ days, data }) => {
-  const o = useContext(Options);
+  const option = useContext(Options);
 
   return (
     <div style={{ display: 'flex' }}>
@@ -29,7 +29,7 @@ const Days: React.FC<DaysType> = ({ days, data }) => {
                     width,
                   }}
                 >
-                  {`${monthNum}${o.monthLetter}`}
+                {format(month, option.headFormat, { locale: option.locale})}
                 </Head>
               );
             }

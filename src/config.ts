@@ -5,8 +5,6 @@ export const CHARTMARGIN = 15;
 
 export const SHOWMONTH = 3;
 
-export const WEEK_JA = ['日', '月', '火', '水', '木', '金', '土'];
-
 export enum CHART_COLOR {
   PINK = '#eac5d1',
   BLUE = '#a8cbd8',

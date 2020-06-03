@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { getDayColor } from '../util';
 import { FlexRow, Day } from './utilComponents';
 import { Options } from '../react-gantt-chart';
 
@@ -15,8 +14,8 @@ const Row: React.FC<RowType> = ({
   width,
   children,
 }) => {
-
-  const o = useContext(Options);
+  const option = useContext(Options);
+  const localize = option.locale.localize as { day: (day: number, width: { width: string }) => string };
 
   return (
     <FlexRow
@@ -29,7 +28,7 @@ const Row: React.FC<RowType> = ({
     >
       <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
         {data.map((d: Date, i: number) => {
-          const color = getDayColor(d, o.isHoliday, o.DAY_COLOR);
+          const color = option.getDayColor(d);
           return (
             <Day
               key={i}
@@ -39,7 +38,7 @@ const Row: React.FC<RowType> = ({
                 <p>
                   {d.getDate()}
                   <br />
-                  {o.WEEK_JA[d.getDay()]}
+                  {localize.day(d.getDay(), { width: 'short' })}
                 </p>
               )}
             </Day>

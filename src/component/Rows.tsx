@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { format as formatDate, differenceInCalendarDays } from 'date-fns';
 import { CELLWIDTH, CHARTMARGIN } from '../config';
-import { getChartColor } from '../util';
 import { Schedule } from './utilComponents';
 import Row from './Row';
 import { HeadRowsDataType, Data } from '../type/type';
@@ -14,7 +13,7 @@ interface RowsType {
 
 const Rows: React.FC<RowsType> = ({ intervalDate, data }) => {
   const [firstDay] = intervalDate;
-  const o = useContext(Options);
+  const option = useContext(Options);
 
   return (
     <>
@@ -34,7 +33,7 @@ const Rows: React.FC<RowsType> = ({ intervalDate, data }) => {
                   key={i}
                   width={`${endDay * CELLWIDTH}px`}
                   left={`${startDay * CELLWIDTH + CHARTMARGIN}px`}
-                  backgroundColor={getChartColor(i, o.CHART_COLOR)}
+                  backgroundColor={option.getChartColor(i)}
                 >
                   <span
                     style={{

@@ -1,12 +1,14 @@
 import React, { useState, createContext } from 'react';
 import Styled from 'styled-components';
+import { isSunday, isToday, isSaturday } from 'date-fns';
 import HeadRows from './component/HeadRows';
 import Rows from './component/Rows';
 import Days from './component/Days';
 import Paging from './component/Paging';
+import en from  'date-fns/locale/en-US';
+
 import { 
   SHOWMONTH,
-  WEEK_JA,
   CHARTMARGIN,
   CHART_COLOR,
   DAY_COLOR
@@ -37,15 +39,14 @@ const GanttChartBody = Styled.div`
 
 const defaultOptions: DefaultOptionsType = {
   showMonth: SHOWMONTH,
-  isHoliday: () => undefined,
-  WEEK_JA: ['日', '月', '火', '水', '木', '金', '土'],
-  CHART_COLOR: CHART_COLOR,
-  DAY_COLOR: DAY_COLOR,
+  locale: en,
   headTitle: '',
-  yearLetter: '/',
-  monthLetter: '',
-  pagingPrevLetter: 'prev',
-  pagingNextLetter: 'next'
+  headFormat: 'yyyy/MM',
+  currentFormat: 'yyyy/MM/dd',
+  getPagingPrevLetter: (month: number) => 'prev',
+  getPagingNextLetter: (month: number) => 'next',
+  getDayColor: (date: Date) :string => 'none',
+  getChartColor: (i: number) :string => 'rgba(0, 0,0 , 0.7)'
 };
 
 const ReactGanttChart: React.FC<RootProps> = ({
@@ -63,14 +64,14 @@ const ReactGanttChart: React.FC<RootProps> = ({
     ): { [key: number]: Date } => {
       return {
         ...accumulator,
-        [`${currentValue.getFullYear()}${extendsOptions.yearLetter}${
+        [`${currentValue.getFullYear()}${
           currentValue.getMonth() + 1
         }`]: currentValue,
       };
     },
     {}
   );
-
+ 
   return (
     <>
       <Options.Provider value={extendsOptions}>
