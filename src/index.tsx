@@ -46,8 +46,6 @@ const products: HeadRowsDataType[] = [
 
 const option = {
   showMonth: 4,
-  pagingPrevLetter: 'ヵ月前',
-  pagingNextLetter: 'ヵ月後',
   locale: ja,
   headFormat: 'yyyy年MM月',
   currentFormat: 'yyyy月MM月dd日',
