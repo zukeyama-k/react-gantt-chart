@@ -1,7 +1,6 @@
 export const CELLWIDTH = 30;
 export const CHARTMARGIN = 15;
 export const SHOWMONTH = 3;
-export const WEEK_JA = ['日', '月', '火', '水', '木', '金', '土'];
 export var CHART_COLOR;
 (function (CHART_COLOR) {
     CHART_COLOR["PINK"] = "#eac5d1";

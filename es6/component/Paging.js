@@ -10,24 +10,20 @@ const Button = Styled.button `
   font-weight: bold;
 `;
 const Paging = ({ set, value }) => {
-    const o = useContext(Options);
+    const option = useContext(Options);
     const [start, end] = value;
     const prev = () => {
-        set([start - o.showMonth, end]);
+        set([start - option.showMonth, end]);
     };
     const next = () => {
-        set([start + o.showMonth, end]);
+        set([start + option.showMonth, end]);
     };
     return (React.createElement("div", { style: { display: 'flex', alignItems: 'center', marginBottom: '10px' } },
-        React.createElement(Button, { onClick: prev },
-            o.showMonth,
-            o.pagingPrevLetter),
+        React.createElement(Button, { onClick: prev }, option.getPagingPrevLetter(option.showMonth)),
         React.createElement("div", null,
             "\uFF5C",
-            formatDate(new Date(), 'yyyy年MM月dd日'),
+            formatDate(new Date(), option.currentFormat),
             "\uFF5C"),
-        React.createElement(Button, { onClick: next },
-            o.showMonth,
-            o.pagingNextLetter)));
+        React.createElement(Button, { onClick: next }, option.getPagingNextLetter(option.showMonth))));
 };
 export default Paging;

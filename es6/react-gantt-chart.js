@@ -4,7 +4,8 @@ import HeadRows from './component/HeadRows';
 import Rows from './component/Rows';
 import Days from './component/Days';
 import Paging from './component/Paging';
-import { SHOWMONTH, CHART_COLOR, DAY_COLOR } from './config';
+import en from 'date-fns/locale/en-US';
+import { SHOWMONTH } from './config';
 import { getIntervalDate } from './util';
 export const Options = createContext({});
 const GanttChartContainer = Styled.div `
@@ -25,15 +26,14 @@ const GanttChartBody = Styled.div `
 `;
 const defaultOptions = {
     showMonth: SHOWMONTH,
-    isHoliday: () => undefined,
-    WEEK_JA: ['日', '月', '火', '水', '木', '金', '土'],
-    CHART_COLOR: CHART_COLOR,
-    DAY_COLOR: DAY_COLOR,
+    locale: en,
     headTitle: '',
-    yearLetter: '/',
-    monthLetter: '',
-    pagingPrevLetter: 'prev',
-    pagingNextLetter: 'next'
+    headFormat: 'yyyy/MM',
+    currentFormat: 'yyyy/MM/dd',
+    getPagingPrevLetter: (month) => 'prev',
+    getPagingNextLetter: (month) => 'next',
+    getDayColor: (date) => 'none',
+    getChartColor: (i) => 'rgba(0, 0,0 , 0.7)'
 };
 const ReactGanttChart = ({ data, option }) => {
     const products = data;
@@ -41,7 +41,7 @@ const ReactGanttChart = ({ data, option }) => {
     const [[start, end], setPage] = useState([1, extendsOptions.showMonth - 1]);
     const intervalDate = getIntervalDate(start, end);
     const intervalManth = intervalDate.reduce((accumulator, currentValue) => {
-        return Object.assign(Object.assign({}, accumulator), { [`${currentValue.getFullYear()}${extendsOptions.yearLetter}${currentValue.getMonth() + 1}`]: currentValue });
+        return Object.assign(Object.assign({}, accumulator), { [`${currentValue.getFullYear()}${currentValue.getMonth() + 1}`]: currentValue });
     }, {});
     return (React.createElement(React.Fragment, null,
         React.createElement(Options.Provider, { value: extendsOptions },

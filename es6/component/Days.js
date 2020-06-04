@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import { endOfMonth } from 'date-fns';
+import { endOfMonth, format } from 'date-fns';
 import { CELLWIDTH } from '../config';
 import { Head } from './utilComponents';
 import Row from './Row';
 import { Options } from '../react-gantt-chart';
 const Days = ({ days, data }) => {
-    const o = useContext(Options);
+    const option = useContext(Options);
     return (React.createElement("div", { style: { display: 'flex' } },
         React.createElement("div", { style: { flex: '1 1 auto' } },
             React.createElement("div", { style: { display: 'flex' } }, Object.entries(days).map(([monthNum, month], i) => {
@@ -14,7 +14,7 @@ const Days = ({ days, data }) => {
                         textAlign: 'center',
                         borderRight: 'solid 1px #dedede',
                         width,
-                    } }, `${monthNum}${o.monthLetter}`));
+                    } }, format(month, option.headFormat, { locale: option.locale })));
             })),
             React.createElement(Row, { data: data, width: `${data.length * CELLWIDTH}px` }))));
 };
