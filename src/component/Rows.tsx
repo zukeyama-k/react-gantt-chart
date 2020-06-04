@@ -15,7 +15,7 @@ interface ScheduleType {
 const Schedule:React.FC<ScheduleType> = ({ width, left, backgroundColor, remark = '' }) => {
   const context = useContext(Options);
   var useTooltips = context.state.useTooltips;
-  const onShowTooltips = (e:any) :void => {
+  const onShowTooltips = (e:React.MouseEvent<HTMLInputElement>) :void => {
     useTooltips.set({ remark, point: { x: e.clientX, y: e.clientY } });
   }
   const onHideTooltips = () :void => {
