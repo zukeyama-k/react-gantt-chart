@@ -8,7 +8,7 @@ export interface HeadRowsDataTypes {
 }
 
 const HeadRows: React.FC<HeadRowsDataTypes> = ({ rows }) => {
-  const option = useContext(Options);
+  const context = useContext(Options);
 
   return (
     <>
@@ -21,7 +21,7 @@ const HeadRows: React.FC<HeadRowsDataTypes> = ({ rows }) => {
           height: '50px',
         }}
       >
-        {option.headTitle}
+        {context.options.headTitle}
       </FlexRow>
       {rows.map((row: HeadRowsDataType, i: number) => (
         <FlexRow

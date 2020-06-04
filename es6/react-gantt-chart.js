@@ -35,22 +35,35 @@ const defaultOptions = {
     getDayColor: (date) => 'none',
     getChartColor: (i) => 'rgba(0, 0,0 , 0.7)'
 };
+const Tooltips = ({ coordinate, children }) => {
+    const { remark, point } = coordinate;
+    return (React.createElement("div", { style: { position: 'absolute', top: `${point.y - 20}px`, left: `${point.x + 20}px`, height: 'auto', borderRadius: '3px', boxSizing: 'border-box', backgroundColor: '#fff' } }, remark));
+};
 const ReactGanttChart = ({ data, option }) => {
     const products = data;
     const extendsOptions = Object.assign(Object.assign({}, defaultOptions), option);
     const [[start, end], setPage] = useState([1, extendsOptions.showMonth - 1]);
+    const [coordinate, setTooltips] = useState({ remark: '', point: { x: 0, y: 0 } });
+    const context = {
+        options: extendsOptions,
+        state: {
+            usePage: { val: [start, end], set: setPage },
+            useTooltips: { val: coordinate, set: setTooltips }
+        }
+    };
     const intervalDate = getIntervalDate(start, end);
     const intervalManth = intervalDate.reduce((accumulator, currentValue) => {
         return Object.assign(Object.assign({}, accumulator), { [`${currentValue.getFullYear()}${currentValue.getMonth() + 1}`]: currentValue });
     }, {});
     return (React.createElement(React.Fragment, null,
-        React.createElement(Options.Provider, { value: extendsOptions },
+        React.createElement(Options.Provider, { value: context },
             React.createElement(Paging, { set: setPage, value: [start, end] }),
             React.createElement(GanttChartContainer, null,
                 React.createElement(GanttChartHeader, null,
                     React.createElement(HeadRows, { rows: products })),
                 React.createElement(GanttChartBody, null,
                     React.createElement(Days, { days: intervalManth, data: intervalDate }),
-                    React.createElement(Rows, { intervalDate: intervalDate, data: products }))))));
+                    React.createElement(Rows, { intervalDate: intervalDate, data: products })),
+                !!coordinate.remark && (React.createElement(Tooltips, { coordinate: coordinate }))))));
 };
 export default ReactGanttChart;

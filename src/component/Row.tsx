@@ -14,8 +14,8 @@ const Row: React.FC<RowType> = ({
   width,
   children,
 }) => {
-  const option = useContext(Options);
-  const localize = option.locale.localize as { day: (day: number, width: { width: string }) => string };
+  const context = useContext(Options);
+  const localize = context.options.locale.localize as { day: (day: number, width: { width: string }) => string };
 
   return (
     <FlexRow
@@ -28,7 +28,7 @@ const Row: React.FC<RowType> = ({
     >
       <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
         {data.map((d: Date, i: number) => {
-          const color = option.getDayColor(d);
+          const color = context.options.getDayColor(d);
           return (
             <Day
               key={i}

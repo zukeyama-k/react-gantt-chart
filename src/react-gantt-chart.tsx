@@ -8,15 +8,12 @@ import Paging from './component/Paging';
 import en from  'date-fns/locale/en-US';
 
 import { 
-  SHOWMONTH,
-  CHARTMARGIN,
-  CHART_COLOR,
-  DAY_COLOR
+  SHOWMONTH
  } from './config';
 import { getIntervalDate } from './util';
-import { HeadRowsDataType, RootProps, DefaultOptionsType } from './type/type';
+import { HeadRowsDataType, RootProps, DefaultOptionsType, Context } from './type/type';
 
-export const Options = createContext({} as DefaultOptionsType);
+export const Options = createContext({} as Context);
 
 const GanttChartContainer = Styled.div`
   display: flex;
@@ -49,13 +46,30 @@ const defaultOptions: DefaultOptionsType = {
   getChartColor: (i: number) :string => 'rgba(0, 0,0 , 0.7)'
 };
 
+const Tooltips:React.FC<any> = ({ coordinate, children }) => {
+  const { remark, point } = coordinate;
+  return (
+    <div style={{ position: 'absolute', top: `${point.y - 20}px`, left: `${point.x + 20}px`, height: 'auto', borderRadius: '3px', boxSizing: 'border-box', backgroundColor: '#fff' }}>
+     { remark }
+    </div>
+  )
+}
+
 const ReactGanttChart: React.FC<RootProps> = ({
   data,
   option
 }) => {
   const products: HeadRowsDataType[] = data;
-  const extendsOptions = { ...defaultOptions, ...option };
+  const extendsOptions:DefaultOptionsType = { ...defaultOptions, ...option }; 
   const [[start, end], setPage] = useState([1, extendsOptions.showMonth - 1]);
+  const [coordinate, setTooltips] = useState({ remark: '', point: { x: 0, y: 0} });
+  const context: Context = {
+    options: extendsOptions,
+    state: {
+      usePage: { val: [start, end], set: setPage },
+      useTooltips: { val: coordinate, set: setTooltips }
+    }
+  };
   const intervalDate: Date[] = getIntervalDate(start, end);
   const intervalManth: { [key: number]: Date } = intervalDate.reduce(
     (
@@ -74,7 +88,7 @@ const ReactGanttChart: React.FC<RootProps> = ({
  
   return (
     <>
-      <Options.Provider value={extendsOptions}>
+      <Options.Provider value={context}>
         <Paging set={setPage} value={[start, end]} />
         <GanttChartContainer>
           <GanttChartHeader>
@@ -84,7 +98,11 @@ const ReactGanttChart: React.FC<RootProps> = ({
             <Days days={intervalManth} data={intervalDate} />
             <Rows intervalDate={intervalDate} data={products} />
           </GanttChartBody>
+          { 
+          !!coordinate.remark && (<Tooltips coordinate={coordinate} />)
+          }       
         </GanttChartContainer>
+
       </Options.Provider>
     </>
   );
