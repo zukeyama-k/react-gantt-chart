@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { format as formatDate, differenceInCalendarDays } from 'date-fns';
 import { CELLWIDTH, CHARTMARGIN } from '../config';
 import Row from './Row';

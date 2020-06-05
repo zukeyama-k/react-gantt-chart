@@ -14,7 +14,7 @@ const products: HeadRowsDataType[] = [
     name: 'test1',
     data: [
       { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30), remark: 'テステス' },
-      { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12), remark: 'テステス2' },
+      { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12), remark: 'テステス28888888888' },
       { start: new Date(2020, 6, 3), end: new Date(2020, 8, 30), remark: 'テステス4' },
     ],
   },

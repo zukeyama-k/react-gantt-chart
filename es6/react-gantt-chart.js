@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, forwardRef, useRef } from 'react';
 import Styled from 'styled-components';
 import HeadRows from './component/HeadRows';
 import Rows from './component/Rows';
@@ -35,16 +35,27 @@ const defaultOptions = {
     getDayColor: (date) => 'none',
     getChartColor: (i) => 'rgba(0, 0,0 , 0.7)'
 };
-const Tooltips = ({ coordinate, children }) => {
-    const { remark, point } = coordinate;
-    return (React.createElement("div", { style: { position: 'absolute', top: `${point.y - 20}px`, left: `${point.x + 20}px`, height: 'auto', borderRadius: '3px', boxSizing: 'border-box', backgroundColor: '#fff' } }, remark));
+const Tooltips = (props, ref) => {
+    return (React.createElement("div", { ref: ref, style: {
+            position: 'absolute',
+            padding: '3px 5px',
+            fontSize: '12px',
+            height: 'auto',
+            borderRadius: '3px',
+            boxSizing: 'border-box',
+            backgroundColor: '#fff',
+            boxShadow: "-3px 6px 19px -4px rgba(0, 0, 0, 0.54)"
+        } }));
 };
+const WrapperTooltips = forwardRef(Tooltips);
 const ReactGanttChart = ({ data, option }) => {
+    const tooltipRef = useRef(null);
     const products = data;
     const extendsOptions = Object.assign(Object.assign({}, defaultOptions), option);
     const [[start, end], setPage] = useState([1, extendsOptions.showMonth - 1]);
     const [coordinate, setTooltips] = useState({ remark: '', point: { x: 0, y: 0 } });
     const context = {
+        tooltipRef,
         options: extendsOptions,
         state: {
             usePage: { val: [start, end], set: setPage },
@@ -64,6 +75,6 @@ const ReactGanttChart = ({ data, option }) => {
                 React.createElement(GanttChartBody, null,
                     React.createElement(Days, { days: intervalManth, data: intervalDate }),
                     React.createElement(Rows, { intervalDate: intervalDate, data: products })),
-                !!coordinate.remark && (React.createElement(Tooltips, { coordinate: coordinate }))))));
+                React.createElement(WrapperTooltips, { ref: tooltipRef })))));
 };
 export default ReactGanttChart;
