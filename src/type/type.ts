@@ -62,4 +62,5 @@ export interface DefaultOptionsType {
 export interface Context {
   options: DefaultOptionsType;
   state: { [key: string]: { val: any, set: any} };
+  tooltipRef: React.RefObject<any>
 }

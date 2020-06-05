@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, forwardRef, useRef } from 'react';
 import Styled from 'styled-components';
 import { isSunday, isToday, isSaturday } from 'date-fns';
 import HeadRows from './component/HeadRows';
@@ -48,40 +48,39 @@ const defaultOptions: DefaultOptionsType = {
 
 interface Coordinate {
   coordinate: {
-    remark: string;
     point: { x: number, y: number };
   }
 }
 
-const Tooltips:React.FC<Coordinate> = ({ coordinate, children }) => {
-  const { remark, point } = coordinate;
+const Tooltips: React.ForwardRefRenderFunction<HTMLDivElement, {}> = (props, ref) => {
   return (
-    <div style={{
+    <div ref={ref} style={{
       position: 'absolute',
       padding: '3px 5px',
       fontSize: '12px',
-      top: `${point.y - 20}px`,
-      left: `${point.x}px`,
       height: 'auto',
       borderRadius: '3px',
       boxSizing: 'border-box',
       backgroundColor: '#fff',
       boxShadow: "-3px 6px 19px -4px rgba(0, 0, 0, 0.54)" }}
     >
-     { remark }
     </div>
   )
 }
+
+const WrapperTooltips = forwardRef(Tooltips);
 
 const ReactGanttChart: React.FC<RootProps> = ({
   data,
   option
 }) => {
+  const tooltipRef = useRef(null);
   const products: HeadRowsDataType[] = data;
   const extendsOptions:DefaultOptionsType = { ...defaultOptions, ...option }; 
   const [[start, end], setPage] = useState([1, extendsOptions.showMonth - 1]);
   const [coordinate, setTooltips] = useState({ remark: '', point: { x: 0, y: 0} });
   const context: Context = {
+    tooltipRef,
     options: extendsOptions,
     state: {
       usePage: { val: [start, end], set: setPage },
@@ -116,11 +115,8 @@ const ReactGanttChart: React.FC<RootProps> = ({
             <Days days={intervalManth} data={intervalDate} />
             <Rows intervalDate={intervalDate} data={products} />
           </GanttChartBody>
-          { 
-          !!coordinate.remark && (<Tooltips coordinate={coordinate} />)
-          }       
+          <WrapperTooltips ref={tooltipRef} />     
         </GanttChartContainer>
-
       </Options.Provider>
     </>
   );
