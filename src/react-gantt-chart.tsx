@@ -46,10 +46,28 @@ const defaultOptions: DefaultOptionsType = {
   getChartColor: (i: number) :string => 'rgba(0, 0,0 , 0.7)'
 };
 
-const Tooltips:React.FC<any> = ({ coordinate, children }) => {
+interface Coordinate {
+  coordinate: {
+    remark: string;
+    point: { x: number, y: number };
+  }
+}
+
+const Tooltips:React.FC<Coordinate> = ({ coordinate, children }) => {
   const { remark, point } = coordinate;
   return (
-    <div style={{ position: 'absolute', top: `${point.y - 20}px`, left: `${point.x + 20}px`, height: 'auto', borderRadius: '3px', boxSizing: 'border-box', backgroundColor: '#fff' }}>
+    <div style={{
+      position: 'absolute',
+      padding: '3px 5px',
+      fontSize: '12px',
+      top: `${point.y - 20}px`,
+      left: `${point.x}px`,
+      height: 'auto',
+      borderRadius: '3px',
+      boxSizing: 'border-box',
+      backgroundColor: '#fff',
+      boxShadow: "-3px 6px 19px -4px rgba(0, 0, 0, 0.54)" }}
+    >
      { remark }
     </div>
   )
