@@ -37,7 +37,8 @@ const defaultOptions = {
 };
 const Tooltips = (props, ref) => {
     return (React.createElement("div", { ref: ref, style: {
-            position: 'absolute',
+            width: '350px',
+            position: 'fixed',
             padding: '3px 5px',
             fontSize: '12px',
             height: 'auto',
@@ -53,14 +54,9 @@ const ReactGanttChart = ({ data, option }) => {
     const products = data;
     const extendsOptions = Object.assign(Object.assign({}, defaultOptions), option);
     const [[start, end], setPage] = useState([1, extendsOptions.showMonth - 1]);
-    const [coordinate, setTooltips] = useState({ remark: '', point: { x: 0, y: 0 } });
     const context = {
         tooltipRef,
-        options: extendsOptions,
-        state: {
-            usePage: { val: [start, end], set: setPage },
-            useTooltips: { val: coordinate, set: setTooltips }
-        }
+        options: extendsOptions
     };
     const intervalDate = getIntervalDate(start, end);
     const intervalManth = intervalDate.reduce((accumulator, currentValue) => {
