@@ -42,6 +42,7 @@ const Rows: React.FC<RowsType> = ({ intervalDate, data }) => {
       context.tooltipRef.current.textContent = null;    
     }
   }
+
   return (
     <>
       {data.map((productsData: HeadRowsDataType, i: number) => {
@@ -57,6 +58,7 @@ const Rows: React.FC<RowsType> = ({ intervalDate, data }) => {
                 const startDay = differenceInCalendarDays(sale.start, firstDay);
                 const endDay = differenceInCalendarDays(sale.end, sale.start);
                 const remark = sale.remark || '';
+
                 return (
                   <Schedule
                     key={i}

@@ -55,7 +55,7 @@ interface Coordinate {
 const Tooltips: React.ForwardRefRenderFunction<HTMLDivElement, {}> = (props, ref) => {
   return (
     <div ref={ref} style={{
-      position: 'absolute',
+      position: 'fixed',
       padding: '3px 5px',
       fontSize: '12px',
       height: 'auto',
@@ -78,14 +78,9 @@ const ReactGanttChart: React.FC<RootProps> = ({
   const products: HeadRowsDataType[] = data;
   const extendsOptions:DefaultOptionsType = { ...defaultOptions, ...option }; 
   const [[start, end], setPage] = useState([1, extendsOptions.showMonth - 1]);
-  const [coordinate, setTooltips] = useState({ remark: '', point: { x: 0, y: 0} });
   const context: Context = {
     tooltipRef,
-    options: extendsOptions,
-    state: {
-      usePage: { val: [start, end], set: setPage },
-      useTooltips: { val: coordinate, set: setTooltips }
-    }
+    options: extendsOptions
   };
   const intervalDate: Date[] = getIntervalDate(start, end);
   const intervalManth: { [key: number]: Date } = intervalDate.reduce(
