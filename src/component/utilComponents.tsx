@@ -32,19 +32,3 @@ export const Day = Styled.div`
   text-align: center;
   box-sizing: border-box;
 `;
-
-export const Schedule = Styled.div<{
-  width: string;
-  left: string;
-  backgroundColor: string;
-}>`
-  position: absolute;
-  top: 5px;
-  left: ${(props) => props.left};
-  width: ${(props) => props.width};
-  height: 30px;
-  border-radius: 5px;
-  background: ${(props) => props.backgroundColor};
-  opacity: 0.7;
-  box-sizing: border-box;
-`;

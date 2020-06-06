@@ -11,31 +11,31 @@ import {
  } from './config';
 const products: HeadRowsDataType[] = [
   {
-    name: 'test',
+    name: 'test1',
     data: [
-      { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30) },
+      { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30), remark: 'テステス' },
+      { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12), remark: 'テステス28888888888' },
+      { start: new Date(2020, 6, 3), end: new Date(2020, 8, 30), remark: 'テステス4' },
+    ],
+  },
+  {
+    name: 'test2',
+    data: [
+      { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30), remark: 'テregrステス4' },
+      { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12), remark: 'チャート上の期間の表示が短いと切れてしまうので、削除してしまって hover で表示させたいです。' },
+      { start: new Date(2020, 6, 3), end: new Date(2020, 8, 30) },
+    ],
+  },
+  {
+    name: 'test3',
+    data: [
+      { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30), remark: 'fffff' },
       { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12) },
       { start: new Date(2020, 6, 3), end: new Date(2020, 8, 30) },
     ],
   },
   {
-    name: 'test',
-    data: [
-      { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30) },
-      { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12) },
-      { start: new Date(2020, 6, 3), end: new Date(2020, 8, 30) },
-    ],
-  },
-  {
-    name: 'test',
-    data: [
-      { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30) },
-      { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12) },
-      { start: new Date(2020, 6, 3), end: new Date(2020, 8, 30) },
-    ],
-  },
-  {
-    name: 'test',
+    name: 'test4',
     data: [
       { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30) },
       { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12) },

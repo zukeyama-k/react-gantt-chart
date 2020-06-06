@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, forwardRef, useRef } from 'react';
 import Styled from 'styled-components';
 import HeadRows from './component/HeadRows';
 import Rows from './component/Rows';
@@ -35,22 +35,42 @@ const defaultOptions = {
     getDayColor: (date) => 'none',
     getChartColor: (i) => 'rgba(0, 0,0 , 0.7)'
 };
+const Tooltips = (props, ref) => {
+    return (React.createElement("div", { ref: ref, style: {
+            width: '350px',
+            position: 'fixed',
+            padding: '3px 5px',
+            fontSize: '12px',
+            height: 'auto',
+            borderRadius: '3px',
+            boxSizing: 'border-box',
+            backgroundColor: '#fff',
+            boxShadow: "-3px 6px 19px -4px rgba(0, 0, 0, 0.54)"
+        } }));
+};
+const WrapperTooltips = forwardRef(Tooltips);
 const ReactGanttChart = ({ data, option }) => {
+    const tooltipRef = useRef(null);
     const products = data;
     const extendsOptions = Object.assign(Object.assign({}, defaultOptions), option);
     const [[start, end], setPage] = useState([1, extendsOptions.showMonth - 1]);
+    const context = {
+        tooltipRef,
+        options: extendsOptions
+    };
     const intervalDate = getIntervalDate(start, end);
     const intervalManth = intervalDate.reduce((accumulator, currentValue) => {
         return Object.assign(Object.assign({}, accumulator), { [`${currentValue.getFullYear()}${currentValue.getMonth() + 1}`]: currentValue });
     }, {});
     return (React.createElement(React.Fragment, null,
-        React.createElement(Options.Provider, { value: extendsOptions },
+        React.createElement(Options.Provider, { value: context },
             React.createElement(Paging, { set: setPage, value: [start, end] }),
             React.createElement(GanttChartContainer, null,
                 React.createElement(GanttChartHeader, null,
                     React.createElement(HeadRows, { rows: products })),
                 React.createElement(GanttChartBody, null,
                     React.createElement(Days, { days: intervalManth, data: intervalDate }),
-                    React.createElement(Rows, { intervalDate: intervalDate, data: products }))))));
+                    React.createElement(Rows, { intervalDate: intervalDate, data: products })),
+                React.createElement(WrapperTooltips, { ref: tooltipRef })))));
 };
 export default ReactGanttChart;

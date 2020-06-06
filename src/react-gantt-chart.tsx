@@ -1,4 +1,4 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, createContext, forwardRef, useRef } from 'react';
 import Styled from 'styled-components';
 import { isSunday, isToday, isSaturday } from 'date-fns';
 import HeadRows from './component/HeadRows';
@@ -8,15 +8,12 @@ import Paging from './component/Paging';
 import en from  'date-fns/locale/en-US';
 
 import { 
-  SHOWMONTH,
-  CHARTMARGIN,
-  CHART_COLOR,
-  DAY_COLOR
+  SHOWMONTH
  } from './config';
 import { getIntervalDate } from './util';
-import { HeadRowsDataType, RootProps, DefaultOptionsType } from './type/type';
+import { HeadRowsDataType, RootProps, DefaultOptionsType, Context } from './type/type';
 
-export const Options = createContext({} as DefaultOptionsType);
+export const Options = createContext({} as Context);
 
 const GanttChartContainer = Styled.div`
   display: flex;
@@ -49,13 +46,43 @@ const defaultOptions: DefaultOptionsType = {
   getChartColor: (i: number) :string => 'rgba(0, 0,0 , 0.7)'
 };
 
+interface Coordinate {
+  coordinate: {
+    point: { x: number, y: number };
+  }
+}
+
+const Tooltips: React.ForwardRefRenderFunction<HTMLDivElement, {}> = (props, ref) => {
+  return (
+    <div ref={ref} style={{
+      width: '350px',
+      position: 'fixed',
+      padding: '3px 5px',
+      fontSize: '12px',
+      height: 'auto',
+      borderRadius: '3px',
+      boxSizing: 'border-box',
+      backgroundColor: '#fff',
+      boxShadow: "-3px 6px 19px -4px rgba(0, 0, 0, 0.54)" }}
+    >
+    </div>
+  )
+}
+
+const WrapperTooltips = forwardRef(Tooltips);
+
 const ReactGanttChart: React.FC<RootProps> = ({
   data,
   option
 }) => {
+  const tooltipRef = useRef(null);
   const products: HeadRowsDataType[] = data;
-  const extendsOptions = { ...defaultOptions, ...option };
+  const extendsOptions:DefaultOptionsType = { ...defaultOptions, ...option }; 
   const [[start, end], setPage] = useState([1, extendsOptions.showMonth - 1]);
+  const context: Context = {
+    tooltipRef,
+    options: extendsOptions
+  };
   const intervalDate: Date[] = getIntervalDate(start, end);
   const intervalManth: { [key: number]: Date } = intervalDate.reduce(
     (
@@ -74,7 +101,7 @@ const ReactGanttChart: React.FC<RootProps> = ({
  
   return (
     <>
-      <Options.Provider value={extendsOptions}>
+      <Options.Provider value={context}>
         <Paging set={setPage} value={[start, end]} />
         <GanttChartContainer>
           <GanttChartHeader>
@@ -84,6 +111,7 @@ const ReactGanttChart: React.FC<RootProps> = ({
             <Days days={intervalManth} data={intervalDate} />
             <Rows intervalDate={intervalDate} data={products} />
           </GanttChartBody>
+          <WrapperTooltips ref={tooltipRef} />     
         </GanttChartContainer>
       </Options.Provider>
     </>

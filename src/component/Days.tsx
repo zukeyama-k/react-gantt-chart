@@ -11,7 +11,7 @@ interface DaysType {
 }
 
 const Days: React.FC<DaysType> = ({ days, data }) => {
-  const option = useContext(Options);
+  const context = useContext(Options);
 
   return (
     <div style={{ display: 'flex' }}>
@@ -29,7 +29,7 @@ const Days: React.FC<DaysType> = ({ days, data }) => {
                     width,
                   }}
                 >
-                {format(month, option.headFormat, { locale: option.locale})}
+                {format(month, context.options.headFormat, { locale: context.options.locale})}
                 </Head>
               );
             }

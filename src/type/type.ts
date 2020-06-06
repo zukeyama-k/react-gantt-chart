@@ -29,7 +29,7 @@ export type Locale = {
   }
 }
 
-export type Data = { start: Date; end: Date };
+export type Data = { start: Date; end: Date, remark?: string };
 
 export interface HeadRowsDataType {
   name?: string;
@@ -57,4 +57,9 @@ export interface DefaultOptionsType {
   getChartColor: (i: number) => string;
   getPagingPrevLetter: (month: number) => string;
   getPagingNextLetter: (month: number) => string;  
+}
+
+export interface Context {
+  options: DefaultOptionsType;
+  tooltipRef: React.RefObject<{}>
 }

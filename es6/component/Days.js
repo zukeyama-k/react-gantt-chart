@@ -5,7 +5,7 @@ import { Head } from './utilComponents';
 import Row from './Row';
 import { Options } from '../react-gantt-chart';
 const Days = ({ days, data }) => {
-    const option = useContext(Options);
+    const context = useContext(Options);
     return (React.createElement("div", { style: { display: 'flex' } },
         React.createElement("div", { style: { flex: '1 1 auto' } },
             React.createElement("div", { style: { display: 'flex' } }, Object.entries(days).map(([monthNum, month], i) => {
@@ -14,7 +14,7 @@ const Days = ({ days, data }) => {
                         textAlign: 'center',
                         borderRight: 'solid 1px #dedede',
                         width,
-                    } }, format(month, option.headFormat, { locale: option.locale })));
+                    } }, format(month, context.options.headFormat, { locale: context.options.locale })));
             })),
             React.createElement(Row, { data: data, width: `${data.length * CELLWIDTH}px` }))));
 };
