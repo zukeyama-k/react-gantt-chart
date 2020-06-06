@@ -55,6 +55,7 @@ interface Coordinate {
 const Tooltips: React.ForwardRefRenderFunction<HTMLDivElement, {}> = (props, ref) => {
   return (
     <div ref={ref} style={{
+      width: '350px',
       position: 'fixed',
       padding: '3px 5px',
       fontSize: '12px',

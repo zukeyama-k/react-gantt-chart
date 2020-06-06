@@ -5,6 +5,8 @@ import Row from './Row';
 import { HeadRowsDataType, Data } from '../type/type';
 import { Options } from '../react-gantt-chart';
 
+const pointerMargin = 20;
+
 interface ScheduleType {
   width: string;
   left: string;
@@ -33,10 +35,12 @@ const Rows: React.FC<RowsType> = ({ intervalDate, data }) => {
   const context = useContext(Options) as any;
   const onShowTooltips = (e: any) :void => {
     if(e.target.className === 'chart' && e.target.dataset.remark) {
-      context.tooltipRef.current.style.display = 'block';
-      context.tooltipRef.current.style.left = (e.clientX + 20) + 'px';
-      context.tooltipRef.current.style.top = (e.clientY - 20) + 'px';
+      const tooltipRefClientRect = context.tooltipRef.current.getBoundingClientRect();
+      const isMaxWindow = (window.innerWidth - e.clientX) > tooltipRefClientRect.width;
+      context.tooltipRef.current.style.left = (e.clientX + (isMaxWindow ? pointerMargin : -(tooltipRefClientRect.width + pointerMargin))) + 'px';
+      context.tooltipRef.current.style.top = (e.clientY - pointerMargin) + 'px';
       context.tooltipRef.current.textContent = e.target.dataset.remark;  
+      context.tooltipRef.current.style.display = 'block';
     } else {
       context.tooltipRef.current.style.display = 'none'; 
       context.tooltipRef.current.textContent = null;    
