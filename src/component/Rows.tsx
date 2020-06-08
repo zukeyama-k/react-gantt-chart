@@ -34,6 +34,9 @@ const Rows: React.FC<RowsType> = ({ intervalDate, data }) => {
   const [firstDay] = intervalDate;
   const context = useContext(Options) as any;
   const onShowTooltips = (e: any) :void => {
+    /***
+    * render最適化できずに重くなるため仕方なくDOM操作 TODOとしてTooltipのみのrenderが走るようにする
+    ***/
     if(e.target.className === 'chart' && e.target.dataset.remark) {
       const tooltipRefClientRect = context.tooltipRef.current.getBoundingClientRect();
       const isMaxWindow = (window.innerWidth - e.clientX) > tooltipRefClientRect.width;
