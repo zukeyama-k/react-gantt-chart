@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { format as formatDate } from 'date-fns';
 import Styled from 'styled-components';
 import { Options } from '../react-gantt-chart';
 const Button = Styled.button `
@@ -9,7 +8,7 @@ const Button = Styled.button `
   color: #67ad95;
   font-weight: bold;
 `;
-const Paging = ({ set, value }) => {
+const Paging = ({ set, value, children }) => {
     const context = useContext(Options);
     const [start, end] = value;
     const prev = () => {
@@ -18,12 +17,10 @@ const Paging = ({ set, value }) => {
     const next = () => {
         set([start + context.options.showMonth, end]);
     };
+    console.log(value);
     return (React.createElement("div", { style: { display: 'flex', alignItems: 'center', marginBottom: '10px' } },
         React.createElement(Button, { onClick: prev }, context.options.getPagingPrevLetter(context.options.showMonth)),
-        React.createElement("div", null,
-            "\uFF5C",
-            formatDate(new Date(), context.options.currentFormat),
-            "\uFF5C"),
+        children,
         React.createElement(Button, { onClick: next }, context.options.getPagingNextLetter(context.options.showMonth))));
 };
 export default Paging;

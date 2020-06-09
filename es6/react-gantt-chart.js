@@ -1,5 +1,6 @@
 import React, { useState, createContext, forwardRef, useRef } from 'react';
 import Styled from 'styled-components';
+import { format as formatDate } from 'date-fns';
 import HeadRows from './component/HeadRows';
 import Rows from './component/Rows';
 import Days from './component/Days';
@@ -60,11 +61,18 @@ const ReactGanttChart = ({ data, option }) => {
     };
     const intervalDate = getIntervalDate(start, end);
     const intervalManth = intervalDate.reduce((accumulator, currentValue) => {
-        return Object.assign(Object.assign({}, accumulator), { [`${currentValue.getFullYear()}${currentValue.getMonth() + 1}`]: currentValue });
+        const month = currentValue.getMonth();
+        return Object.assign(Object.assign({}, accumulator), { [`${currentValue.getFullYear()}${month < 9 ? '0' + (month + 1) : month}`]: currentValue });
     }, {});
     return (React.createElement(React.Fragment, null,
         React.createElement(Options.Provider, { value: context },
-            React.createElement(Paging, { set: setPage, value: [start, end] }),
+            React.createElement(Paging, { set: setPage, value: [start, end] },
+                React.createElement("div", null,
+                    "\uFF5C",
+                    formatDate(intervalDate[0], context.options.currentFormat),
+                    " ~ ",
+                    formatDate(intervalDate[intervalDate.length - 1], context.options.currentFormat),
+                    "\uFF5C")),
             React.createElement(GanttChartContainer, null,
                 React.createElement(GanttChartHeader, null,
                     React.createElement(HeadRows, { rows: products })),
