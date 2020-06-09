@@ -12,7 +12,6 @@ interface DaysType {
 
 const Days: React.FC<DaysType> = ({ days, data }) => {
   const context = useContext(Options);
-
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ flex: '1 1 auto' }}>

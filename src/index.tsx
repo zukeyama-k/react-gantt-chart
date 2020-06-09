@@ -2,18 +2,28 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import ReactGanttChart from './react-gantt-chart';
 import JapaneseHolidays from 'japanese-holidays';
-import { HeadRowsDataType } from './type/type';
+import { HeadRowsDataType, Data } from './type/type';
 import ja from  'date-fns/locale/ja';
 import { isSunday, isToday, isSaturday } from 'date-fns';
 import { 
   CHART_COLOR,
   DAY_COLOR
  } from './config';
-const products: HeadRowsDataType[] = [
+
+interface DataWidthCssProperties extends Data {
+  customStyle?: React.CSSProperties
+}
+
+interface HeadRowsDataStyleType {
+  name?: string;
+  data: DataWidthCssProperties[];
+}
+
+const products: HeadRowsDataStyleType[] = [
   {
     name: 'test1',
     data: [
-      { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30), remark: 'テステス' },
+      { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30), remark: 'テステス', customStyle: { backgroundColor: 'pink'} },
       { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12), remark: 'テステス28888888888' },
       { start: new Date(2020, 6, 3), end: new Date(2020, 8, 30), remark: 'テステス4' },
     ],

@@ -1,6 +1,6 @@
 import React, { useState, createContext, forwardRef, useRef } from 'react';
 import Styled from 'styled-components';
-import { isSunday, isToday, isSaturday } from 'date-fns';
+import { format as formatDate, isSunday, isToday, isSaturday } from 'date-fns';
 import HeadRows from './component/HeadRows';
 import Rows from './component/Rows';
 import Days from './component/Days';
@@ -89,10 +89,11 @@ const ReactGanttChart: React.FC<RootProps> = ({
       accumulator: { [key: number]: Date },
       currentValue: Date
     ): { [key: number]: Date } => {
+      const month = currentValue.getMonth();
       return {
         ...accumulator,
         [`${currentValue.getFullYear()}${
-          currentValue.getMonth() + 1
+          month < 9 ? '0' + (month + 1) : month
         }`]: currentValue,
       };
     },
@@ -102,7 +103,9 @@ const ReactGanttChart: React.FC<RootProps> = ({
   return (
     <>
       <Options.Provider value={context}>
-        <Paging set={setPage} value={[start, end]} />
+        <Paging set={setPage} value={[start, end]}>
+         <div>｜{formatDate(intervalDate[0], context.options.currentFormat)} ~ {formatDate(intervalDate[intervalDate.length - 1], context.options.currentFormat)}｜</div>
+        </Paging>
         <GanttChartContainer>
           <GanttChartHeader>
             <HeadRows rows={products} />
