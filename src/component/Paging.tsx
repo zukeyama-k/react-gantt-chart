@@ -29,7 +29,6 @@ const Paging: React.FC<PagingType> = ({
   const next = (): void => {
     set([start + context.options.showMonth, end]);
   };
-  console.log(value);
   return (
     <div
       style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}
