@@ -89,17 +89,14 @@ const ReactGanttChart: React.FC<RootProps> = ({
       accumulator: { [key: number]: Date },
       currentValue: Date
     ): { [key: number]: Date } => {
-      const month = currentValue.getMonth();
       return {
         ...accumulator,
-        [`${currentValue.getFullYear()}${
-          month < 9 ? '0' + (month + 1) : month
-        }`]: currentValue,
+        [`${formatDate(currentValue, 'yyyyMM')}`]: currentValue,
       };
     },
     {}
   );
- 
+       console.log(intervalManth);
   return (
     <>
       <Options.Provider value={context}>

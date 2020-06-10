@@ -22,7 +22,7 @@ const Schedule:React.FC<ScheduleType> = ({ width, left, remark = '', customStyle
   const style:React.CSSProperties = { position: 'absolute', top: '5px', left, width, height: '30px', backgroundColor: '#000', borderRadius: '5px', opacity: '0.7', boxSizing: 'border-box' };
   return (
     <div
-      className='chart'
+      className="chart"
       data-remark={remark}
       style={{...style, ...customStyle}}
     >
