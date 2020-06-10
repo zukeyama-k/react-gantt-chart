@@ -96,7 +96,6 @@ const ReactGanttChart: React.FC<RootProps> = ({
     },
     {}
   );
-       console.log(intervalManth);
   return (
     <>
       <Options.Provider value={context}>

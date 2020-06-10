@@ -6,7 +6,7 @@ import { Options } from '../react-gantt-chart';
 const pointerMargin = 20;
 const Schedule = ({ width, left, remark = '', customStyle = {} }) => {
     const style = { position: 'absolute', top: '5px', left, width, height: '30px', backgroundColor: '#000', borderRadius: '5px', opacity: '0.7', boxSizing: 'border-box' };
-    return (React.createElement("div", { className: 'chart', "data-remark": remark, style: Object.assign(Object.assign({}, style), customStyle) }));
+    return (React.createElement("div", { className: "chart", "data-remark": remark, style: Object.assign(Object.assign({}, style), customStyle) }));
 };
 const Rows = ({ intervalDate, data }) => {
     const [firstDay] = intervalDate;

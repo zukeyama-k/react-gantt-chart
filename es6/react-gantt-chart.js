@@ -61,8 +61,7 @@ const ReactGanttChart = ({ data, option }) => {
     };
     const intervalDate = getIntervalDate(start, end);
     const intervalManth = intervalDate.reduce((accumulator, currentValue) => {
-        const month = currentValue.getMonth();
-        return Object.assign(Object.assign({}, accumulator), { [`${currentValue.getFullYear()}${month < 9 ? '0' + (month + 1) : month}`]: currentValue });
+        return Object.assign(Object.assign({}, accumulator), { [`${formatDate(currentValue, 'yyyyMM')}`]: currentValue });
     }, {});
     return (React.createElement(React.Fragment, null,
         React.createElement(Options.Provider, { value: context },

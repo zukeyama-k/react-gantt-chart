@@ -17,7 +17,6 @@ const Paging = ({ set, value, children }) => {
     const next = () => {
         set([start + context.options.showMonth, end]);
     };
-    console.log(value);
     return (React.createElement("div", { style: { display: 'flex', alignItems: 'center', marginBottom: '10px' } },
         React.createElement(Button, { onClick: prev }, context.options.getPagingPrevLetter(context.options.showMonth)),
         children,
