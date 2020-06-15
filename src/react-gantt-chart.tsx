@@ -40,6 +40,7 @@ const defaultOptions: DefaultOptionsType = {
   headTitle: '',
   headFormat: 'yyyy/MM',
   currentFormat: 'yyyy/MM/dd',
+  initDate: new Date(),
   getPagingPrevLetter: (month: number) => 'prev',
   getPagingNextLetter: (month: number) => 'next',
   getDayColor: (date: Date) :string => 'none',
@@ -83,7 +84,7 @@ const ReactGanttChart: React.FC<RootProps> = ({
     tooltipRef,
     options: extendsOptions
   };
-  const intervalDate: Date[] = getIntervalDate(start, end);
+  const intervalDate: Date[] = getIntervalDate(start, end, extendsOptions.initDate);
   const intervalManth: { [key: number]: Date } = intervalDate.reduce(
     (
       accumulator: { [key: number]: Date },

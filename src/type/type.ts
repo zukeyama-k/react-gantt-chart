@@ -53,6 +53,7 @@ export interface DefaultOptionsType {
   locale: Locale;
   headFormat: string;
   currentFormat: string;
+  initDate: Date;
   getDayColor: (date: Date) => string;
   getChartColor: (i: number) => string;
   getPagingPrevLetter: (month: number) => string;

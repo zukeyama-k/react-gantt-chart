@@ -31,6 +31,7 @@ const defaultOptions = {
     headTitle: '',
     headFormat: 'yyyy/MM',
     currentFormat: 'yyyy/MM/dd',
+    initDate: new Date(),
     getPagingPrevLetter: (month) => 'prev',
     getPagingNextLetter: (month) => 'next',
     getDayColor: (date) => 'none',
@@ -59,7 +60,7 @@ const ReactGanttChart = ({ data, option }) => {
         tooltipRef,
         options: extendsOptions
     };
-    const intervalDate = getIntervalDate(start, end);
+    const intervalDate = getIntervalDate(start, end, extendsOptions.initDate);
     const intervalManth = intervalDate.reduce((accumulator, currentValue) => {
         return Object.assign(Object.assign({}, accumulator), { [`${formatDate(currentValue, 'yyyyMM')}`]: currentValue });
     }, {});

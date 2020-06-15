@@ -59,6 +59,7 @@ const option = {
   locale: ja,
   headFormat: 'yyyy年MM月',
   currentFormat: 'yyyy月MM月dd日',
+  initDate: new Date('2022/2/9'),
   getDayColor: (date: Date) :string => {
     if (isToday(date)) return DAY_COLOR.TODAY;
     if (isSunday(date) || JapaneseHolidays.isHoliday(date))
