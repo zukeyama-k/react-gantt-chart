@@ -85,7 +85,7 @@ const ReactGanttChart: React.FC<RootProps> = ({
     options: extendsOptions
   };
   useEffect(() => {
-      setPage([extendsOptions.initDate, addMonths(extendsOptions.initDate, extendsOptions.showMonth - 1)]);
+    setPage([extendsOptions.initDate, addMonths(extendsOptions.initDate, extendsOptions.showMonth - 1)]);
   }, [data]);  
   const intervalDate: Date[] = getIntervalDate(start, end);
   const intervalManth: { [key: number]: Date } = intervalDate.reduce(
