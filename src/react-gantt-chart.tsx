@@ -1,4 +1,4 @@
-import React, { useState, createContext, forwardRef, useRef } from 'react';
+import React, { useState, createContext, forwardRef, useRef, useEffect } from 'react';
 import Styled from 'styled-components';
 import { format as formatDate, isSunday, isToday, isSaturday, addMonths } from 'date-fns';
 import HeadRows from './component/HeadRows';
@@ -79,11 +79,14 @@ const ReactGanttChart: React.FC<RootProps> = ({
   const tooltipRef = useRef(null);
   const products: HeadRowsDataType[] = data;
   const extendsOptions:DefaultOptionsType = { ...defaultOptions, ...option }; 
-  const [[start, end], setPage] = useState([addMonths(extendsOptions.initDate, 1), addMonths(extendsOptions.initDate, extendsOptions.showMonth)]);
+  const [[start, end], setPage] = useState([extendsOptions.initDate, addMonths(extendsOptions.initDate, extendsOptions.showMonth - 1)]);
   const context: Context = {
     tooltipRef,
     options: extendsOptions
   };
+  useEffect(() => {
+      setPage([extendsOptions.initDate, addMonths(extendsOptions.initDate, extendsOptions.showMonth - 1)]);
+  }, [data]);  
   const intervalDate: Date[] = getIntervalDate(start, end);
   const intervalManth: { [key: number]: Date } = intervalDate.reduce(
     (

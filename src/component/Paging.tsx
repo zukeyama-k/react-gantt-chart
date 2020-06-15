@@ -27,12 +27,10 @@ const Paging: React.FC<PagingType> = ({
 
 
   const prev = (): void => {
-    const sub = context.options.showMonth - 1;
-    set([subMonths(start, sub), subMonths(end, sub)]);
+    set([subMonths(start, context.options.showMonth), subMonths(end, context.options.showMonth)]);
   };
   const next = (): void => {
-    const add = context.options.showMonth + 1;
-    set([addMonths(start, add), addMonths(end, add)]);
+    set([addMonths(start, context.options.showMonth), addMonths(end, context.options.showMonth)]);
   };
   return (
     <div
