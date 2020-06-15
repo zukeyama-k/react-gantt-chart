@@ -55,7 +55,7 @@ const products: HeadRowsDataStyleType[] = [
 ];
 
 const option = {
-  showMonth: 4,
+  showMonth: 2,
   locale: ja,
   headFormat: 'yyyy年MM月',
   currentFormat: 'yyyy月MM月dd日',

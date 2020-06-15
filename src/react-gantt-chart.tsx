@@ -84,7 +84,7 @@ const ReactGanttChart: React.FC<RootProps> = ({
     tooltipRef,
     options: extendsOptions
   };
-  const intervalDate: Date[] = getIntervalDate(start, end, extendsOptions.initDate);
+  const intervalDate: Date[] = getIntervalDate(start, end, new Date(extendsOptions.initDate.getTime()));
   const intervalManth: { [key: number]: Date } = intervalDate.reduce(
     (
       accumulator: { [key: number]: Date },

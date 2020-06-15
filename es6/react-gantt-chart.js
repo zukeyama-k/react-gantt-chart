@@ -60,7 +60,7 @@ const ReactGanttChart = ({ data, option }) => {
         tooltipRef,
         options: extendsOptions
     };
-    const intervalDate = getIntervalDate(start, end, extendsOptions.initDate);
+    const intervalDate = getIntervalDate(start, end, new Date(extendsOptions.initDate.getTime()));
     const intervalManth = intervalDate.reduce((accumulator, currentValue) => {
         return Object.assign(Object.assign({}, accumulator), { [`${formatDate(currentValue, 'yyyyMM')}`]: currentValue });
     }, {});
