@@ -78,14 +78,15 @@ const ReactGanttChart: React.FC<RootProps> = ({
 }) => {
   const tooltipRef = useRef(null);
   const products: HeadRowsDataType[] = data;
-  const extendsOptions:DefaultOptionsType = { ...defaultOptions, ...option }; 
-  const [[start, end], setPage] = useState([extendsOptions.initDate, addMonths(extendsOptions.initDate, extendsOptions.showMonth - 1)]);
+  const extendsOptions:DefaultOptionsType = { ...defaultOptions, ...option };
+  const initDate = [extendsOptions.initDate, addMonths(extendsOptions.initDate, extendsOptions.showMonth - 1)];
+  const [[start, end], setPage] = useState(initDate);
   const context: Context = {
     tooltipRef,
     options: extendsOptions
   };
   useEffect(() => {
-    setPage([extendsOptions.initDate, addMonths(extendsOptions.initDate, extendsOptions.showMonth - 1)]);
+    setPage(initDate);
   }, [data]);  
   const intervalDate: Date[] = getIntervalDate(start, end);
   const intervalManth: { [key: number]: Date } = intervalDate.reduce(

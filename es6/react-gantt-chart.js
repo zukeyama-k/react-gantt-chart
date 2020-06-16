@@ -55,13 +55,14 @@ const ReactGanttChart = ({ data, option }) => {
     const tooltipRef = useRef(null);
     const products = data;
     const extendsOptions = Object.assign(Object.assign({}, defaultOptions), option);
-    const [[start, end], setPage] = useState([extendsOptions.initDate, addMonths(extendsOptions.initDate, extendsOptions.showMonth - 1)]);
+    const initDate = [extendsOptions.initDate, addMonths(extendsOptions.initDate, extendsOptions.showMonth - 1)];
+    const [[start, end], setPage] = useState(initDate);
     const context = {
         tooltipRef,
         options: extendsOptions
     };
     useEffect(() => {
-        setPage([extendsOptions.initDate, addMonths(extendsOptions.initDate, extendsOptions.showMonth - 1)]);
+        setPage(initDate);
     }, [data]);
     const intervalDate = getIntervalDate(start, end);
     const intervalManth = intervalDate.reduce((accumulator, currentValue) => {
