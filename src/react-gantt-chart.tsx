@@ -72,7 +72,7 @@ const Tooltips: React.ForwardRefRenderFunction<HTMLDivElement, {}> = (props, ref
 
 const WrapperTooltips = forwardRef(Tooltips);
 
-const ReactGanttChart: React.FC<RootProps> = ({
+const ReactGanttChart = React.memo<RootProps>(({
   data,
   option
 }) => {
@@ -120,6 +120,6 @@ const ReactGanttChart: React.FC<RootProps> = ({
       </Options.Provider>
     </>
   );
-};
+});
 
 export default ReactGanttChart;

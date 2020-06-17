@@ -51,7 +51,7 @@ const Tooltips = (props, ref) => {
         } }));
 };
 const WrapperTooltips = forwardRef(Tooltips);
-const ReactGanttChart = ({ data, option }) => {
+const ReactGanttChart = React.memo(({ data, option }) => {
     const tooltipRef = useRef(null);
     const products = data;
     const extendsOptions = Object.assign(Object.assign({}, defaultOptions), option);
@@ -84,5 +84,5 @@ const ReactGanttChart = ({ data, option }) => {
                     React.createElement(Days, { days: intervalManth, data: intervalDate }),
                     React.createElement(Rows, { intervalDate: intervalDate, data: products })),
                 React.createElement(WrapperTooltips, { ref: tooltipRef })))));
-};
+});
 export default ReactGanttChart;
