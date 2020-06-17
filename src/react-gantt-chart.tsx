@@ -1,6 +1,6 @@
-import React, { useState, createContext, forwardRef, useRef } from 'react';
+import React, { useState, createContext, forwardRef, useRef, useEffect } from 'react';
 import Styled from 'styled-components';
-import { isSunday, isToday, isSaturday } from 'date-fns';
+import { format as formatDate, isSunday, isToday, isSaturday, addMonths } from 'date-fns';
 import HeadRows from './component/HeadRows';
 import Rows from './component/Rows';
 import Days from './component/Days';
@@ -40,6 +40,7 @@ const defaultOptions: DefaultOptionsType = {
   headTitle: '',
   headFormat: 'yyyy/MM',
   currentFormat: 'yyyy/MM/dd',
+  initDate: new Date(),
   getPagingPrevLetter: (month: number) => 'prev',
   getPagingNextLetter: (month: number) => 'next',
   getDayColor: (date: Date) :string => 'none',
@@ -71,18 +72,22 @@ const Tooltips: React.ForwardRefRenderFunction<HTMLDivElement, {}> = (props, ref
 
 const WrapperTooltips = forwardRef(Tooltips);
 
-const ReactGanttChart: React.FC<RootProps> = ({
+const ReactGanttChart = React.memo<RootProps>(({
   data,
   option
 }) => {
   const tooltipRef = useRef(null);
   const products: HeadRowsDataType[] = data;
-  const extendsOptions:DefaultOptionsType = { ...defaultOptions, ...option }; 
-  const [[start, end], setPage] = useState([1, extendsOptions.showMonth - 1]);
+  const extendsOptions:DefaultOptionsType = { ...defaultOptions, ...option };
+  const initDate = [extendsOptions.initDate, addMonths(extendsOptions.initDate, extendsOptions.showMonth - 1)];
+  const [[start, end], setPage] = useState(initDate);
   const context: Context = {
     tooltipRef,
     options: extendsOptions
   };
+  useEffect(() => {
+    setPage(initDate);
+  }, [data]);  
   const intervalDate: Date[] = getIntervalDate(start, end);
   const intervalManth: { [key: number]: Date } = intervalDate.reduce(
     (
@@ -91,18 +96,17 @@ const ReactGanttChart: React.FC<RootProps> = ({
     ): { [key: number]: Date } => {
       return {
         ...accumulator,
-        [`${currentValue.getFullYear()}${
-          currentValue.getMonth() + 1
-        }`]: currentValue,
+        [`${formatDate(currentValue, 'yyyyMM')}`]: currentValue,
       };
     },
     {}
   );
- 
   return (
     <>
       <Options.Provider value={context}>
-        <Paging set={setPage} value={[start, end]} />
+        <Paging set={setPage} value={[start, end]}>
+         <div>｜{formatDate(intervalDate[0], context.options.currentFormat)} ~ {formatDate(intervalDate[intervalDate.length - 1], context.options.currentFormat)}｜</div>
+        </Paging>
         <GanttChartContainer>
           <GanttChartHeader>
             <HeadRows rows={products} />
@@ -116,6 +120,6 @@ const ReactGanttChart: React.FC<RootProps> = ({
       </Options.Provider>
     </>
   );
-};
+});
 
 export default ReactGanttChart;

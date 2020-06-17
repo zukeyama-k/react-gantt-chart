@@ -10,16 +10,21 @@ const pointerMargin = 20;
 interface ScheduleType {
   width: string;
   left: string;
-  backgroundColor: string;
-  remark?: string
+  remark?: string,
+  customStyle?: React.CSSProperties
 }
 
-const Schedule:React.FC<ScheduleType> = ({ width, left, backgroundColor, remark = '' }) => {
+interface DataWidthCssProperties extends Data {
+  customStyle?: React.CSSProperties
+}
+
+const Schedule:React.FC<ScheduleType> = ({ width, left, remark = '', customStyle = {}  }) => {
+  const style:React.CSSProperties = { position: 'absolute', top: '5px', left, width, height: '30px', backgroundColor: '#000', borderRadius: '5px', opacity: '0.7', boxSizing: 'border-box' };
   return (
     <div
       className="chart"
       data-remark={remark}
-      style={{ position: 'absolute', top: '5px', left, width, height: '30px', borderRadius: '5px', backgroundColor, opacity: '0.7', boxSizing: 'border-box' }}
+      style={{...style, ...customStyle}}
     >
     </div>
   )
@@ -61,18 +66,18 @@ const Rows: React.FC<RowsType> = ({ intervalDate, data }) => {
               isShowDay={false}
               width={`${intervalDate.length * CELLWIDTH}px`}
             >
-              {productsData.data.map((sale: Data, i: number) => {
+              {productsData.data.map((sale: DataWidthCssProperties, i: number) => {
                 const startDay = differenceInCalendarDays(sale.start, firstDay);
                 const endDay = differenceInCalendarDays(sale.end, sale.start);
                 const remark = sale.remark || '';
-
+                const customStyle = sale.customStyle || {};
                 return (
                   <Schedule
                     key={i}
                     width={`${endDay * CELLWIDTH}px`}
                     left={`${startDay * CELLWIDTH + CHARTMARGIN}px`}
-                    backgroundColor={context.options.getChartColor(i)}
                     remark={remark}
+                    customStyle={customStyle}
                   >
                   </Schedule>
                 );
