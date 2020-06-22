@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Head, FlexRow } from './utilComponents';
 import { Options } from '../react-gantt-chart';
-//? 'existed' : 'new';
 const HeadRows = ({ rows }) => {
     const context = useContext(Options);
     return (React.createElement(React.Fragment, null,
