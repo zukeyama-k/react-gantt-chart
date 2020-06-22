@@ -6,7 +6,7 @@ import { Options } from '../react-gantt-chart';
 export interface HeadRowsDataTypes {
   rows: HeadRowsDataType[];
 }
-
+//? 'existed' : 'new';
 const HeadRows: React.FC<HeadRowsDataTypes> = ({ rows }) => {
   const context = useContext(Options);
 
@@ -23,21 +23,24 @@ const HeadRows: React.FC<HeadRowsDataTypes> = ({ rows }) => {
       >
         {context.options.headTitle}
       </FlexRow>
-      {rows.map((row: HeadRowsDataType, i: number) => (
-        <FlexRow
-          index={i + 1}
-          key={i}
-          style={{ padding: '5px 15px', fontSize: '20px', color: '#67ad95' }}
-        >
-          <div className="head-row-title" style={{ overflow: 'scroll'}}>
-            { row.href ? (
-                <a href={row.href} style={{ whiteSpace: 'nowrap' }}>{row.name}</a>
-              ) : (
-                <p style={{ whiteSpace: 'nowrap' }}>{row.name}</p>
-            )}
-          </div>
-        </FlexRow>
-      ))}
+      {rows.map((row: HeadRowsDataType, i: number) => {
+        const isExisted = row.isExisted ? 'existed' : 'new';
+        return (
+          <FlexRow
+            index={i + 1}
+            key={i}
+            style={{ padding: '5px 15px', fontSize: '20px', color: '#67ad95' }}
+          >
+            <div className="head-row-title" style={{ overflow: 'scroll'}}>
+              { row.href ? (
+                  <a href={row.href} style={{ whiteSpace: 'nowrap' }} className={isExisted}>{row.name}</a>
+                ) : (
+                  <p style={{ whiteSpace: 'nowrap' }} className={isExisted}>{row.name}</p>
+              )}
+            </div>
+          </FlexRow>
+        )
+      })}
     </>
   );
 };

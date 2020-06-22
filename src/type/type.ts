@@ -34,6 +34,7 @@ export type Data = { start: Date; end: Date, remark?: string };
 export interface HeadRowsDataType {
   name?: string;
   href?: string;
+  isExisted?: boolean;
   data: Data[];
 }
 

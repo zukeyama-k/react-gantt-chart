@@ -17,6 +17,7 @@ interface DataWidthCssProperties extends Data {
 interface HeadRowsDataStyleType {
   name?: string;
   href?: string;
+  isExisted?: boolean;
   data: DataWidthCssProperties[];
 }
 
@@ -24,6 +25,7 @@ const products: HeadRowsDataStyleType[] = [
   {
     name: 'テストテストテストテストテストテストテストテストテストテスト',
     href: 'http://localhost:3000/companies/nLOeLwtbrqHxrdY7KOMJ/products',
+    isExisted: true,
     data: [
       { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30), remark: 'テステス', customStyle: { backgroundColor: 'pink'} },
       { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12), remark: 'テステス28888888888' },
