@@ -29,7 +29,12 @@ const HeadRows: React.FC<HeadRowsDataTypes> = ({ rows }) => {
           key={i}
           style={{ padding: '5px 15px', fontSize: '20px', color: '#67ad95' }}
         >
-          {row.name}
+        { row.name && (
+          <div className="head-row-title" style={{ overflow: 'scroll'}}>
+            <div dangerouslySetInnerHTML={{__html: row.name}} style={{ whiteSpace: 'nowrap' }} />
+          </div>
+          )
+        }
         </FlexRow>
       ))}
     </>
