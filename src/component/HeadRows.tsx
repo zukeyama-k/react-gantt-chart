@@ -29,12 +29,13 @@ const HeadRows: React.FC<HeadRowsDataTypes> = ({ rows }) => {
           key={i}
           style={{ padding: '5px 15px', fontSize: '20px', color: '#67ad95' }}
         >
-        { row.name && (
           <div className="head-row-title" style={{ overflow: 'scroll'}}>
-            <div dangerouslySetInnerHTML={{__html: row.name}} style={{ whiteSpace: 'nowrap' }} />
+            { row.href ? (
+                <a href={row.href} style={{ whiteSpace: 'nowrap' }}>{row.name}</a>
+              ) : (
+                <p style={{ whiteSpace: 'nowrap' }}>{row.name}</p>
+            )}
           </div>
-          )
-        }
         </FlexRow>
       ))}
     </>
