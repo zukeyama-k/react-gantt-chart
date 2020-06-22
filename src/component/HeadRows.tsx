@@ -6,7 +6,7 @@ import { Options } from '../react-gantt-chart';
 export interface HeadRowsDataTypes {
   rows: HeadRowsDataType[];
 }
-//? 'existed' : 'new';
+
 const HeadRows: React.FC<HeadRowsDataTypes> = ({ rows }) => {
   const context = useContext(Options);
 
