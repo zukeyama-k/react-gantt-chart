@@ -1,6 +1,6 @@
 {
   "name": "react-gantt-chart",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "none",
   "main": "es6/react-gantt-chart.js",
   "scripts": {
