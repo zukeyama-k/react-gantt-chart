@@ -30,7 +30,7 @@ const HeadRows: React.FC<HeadRowsDataTypes> = ({ rows }) => {
             key={i}
             style={{ padding: '5px 15px', fontSize: '20px', color: '#67ad95' }}
           >
-            <div className="head-row-title" style={{ overflow: 'scroll'}}>
+            <div className="head-row-title" style={{ overflowX: 'scroll'}}>
               { row.href ? (
                   <a href={row.href} style={{ whiteSpace: 'nowrap' }} className={row.customClass}>{row.name}</a>
                 ) : (
