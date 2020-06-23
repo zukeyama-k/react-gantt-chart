@@ -24,7 +24,6 @@ const HeadRows: React.FC<HeadRowsDataTypes> = ({ rows }) => {
         {context.options.headTitle}
       </FlexRow>
       {rows.map((row: HeadRowsDataType, i: number) => {
-        const isExisted = row.isExisted ? 'existed' : 'new';
         return (
           <FlexRow
             index={i + 1}
@@ -33,9 +32,9 @@ const HeadRows: React.FC<HeadRowsDataTypes> = ({ rows }) => {
           >
             <div className="head-row-title" style={{ overflow: 'scroll'}}>
               { row.href ? (
-                  <a href={row.href} style={{ whiteSpace: 'nowrap' }} className={isExisted}>{row.name}</a>
+                  <a href={row.href} style={{ whiteSpace: 'nowrap' }} className={row.customClass}>{row.name}</a>
                 ) : (
-                  <p style={{ whiteSpace: 'nowrap' }} className={isExisted}>{row.name}</p>
+                  <p style={{ whiteSpace: 'nowrap' }} className={row.customClass}>{row.name}</p>
               )}
             </div>
           </FlexRow>
