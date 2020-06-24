@@ -13,7 +13,7 @@ const HeadRows = ({ rows }) => {
             } }, context.options.headTitle),
         rows.map((row, i) => {
             return (React.createElement(FlexRow, { index: i + 1, key: i, style: { padding: '5px 15px', fontSize: '20px', color: '#67ad95' } },
-                React.createElement("div", { className: "head-row-title", style: { overflow: 'scroll' } }, row.href ? (React.createElement("a", { href: row.href, style: { whiteSpace: 'nowrap' }, className: row.customClass }, row.name)) : (React.createElement("p", { style: { whiteSpace: 'nowrap' }, className: row.customClass }, row.name)))));
+                React.createElement("div", { className: "head-row-title", style: { overflowX: 'scroll' } }, row.href ? (React.createElement("a", { href: row.href, style: { whiteSpace: 'nowrap' }, className: row.customClass }, row.name)) : (React.createElement("p", { style: { whiteSpace: 'nowrap' }, className: row.customClass }, row.name)))));
         })));
 };
 export default HeadRows;

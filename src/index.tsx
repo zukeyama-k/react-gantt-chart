@@ -28,7 +28,7 @@ const products: HeadRowsDataStyleType[] = [
     customClass: 'mmmm',
     data: [
       { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30), remark: 'テステス', customStyle: { backgroundColor: 'pink'} },
-      { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12), remark: 'テステス28888888888' },
+      { start: new Date(2020, 5, 31), end: new Date(2020, 6, 25), remark: 'テス\nテス\n2888\n88888\n88テステス288\n8888\n\n\n888' },
       { start: new Date(2020, 6, 3), end: new Date(2020, 8, 30), remark: 'テステス4' },
     ],
   },
@@ -63,7 +63,6 @@ const option = {
   locale: ja,
   headFormat: 'yyyy年MM月',
   currentFormat: 'yyyy月MM月dd日',
-  initDate: new Date('2022/2/9'),
   getDayColor: (date: Date) :string => {
     if (isToday(date)) return DAY_COLOR.TODAY;
     if (isSunday(date) || JapaneseHolidays.isHoliday(date))
