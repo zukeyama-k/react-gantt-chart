@@ -20,12 +20,12 @@ const Rows = ({ intervalDate, data }) => {
             const isMaxWindow = (window.innerWidth - e.clientX) > tooltipRefClientRect.width;
             context.tooltipRef.current.style.left = (e.clientX + (isMaxWindow ? pointerMargin : -(tooltipRefClientRect.width + pointerMargin))) + 'px';
             context.tooltipRef.current.style.top = (e.clientY - pointerMargin) + 'px';
-            context.tooltipRef.current.textContent = e.target.dataset.remark;
+            context.tooltipRef.current.innerText = e.target.dataset.remark;
             context.tooltipRef.current.style.display = 'block';
         }
         else {
             context.tooltipRef.current.style.display = 'none';
-            context.tooltipRef.current.textContent = null;
+            context.tooltipRef.current.innerText = null;
         }
     };
     return (React.createElement(React.Fragment, null, data.map((productsData, i) => {
