@@ -1,9 +1,11 @@
 {
-  "parser": "@typescript-eslint/parser", 
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "prettier",
+    "prettier/@typescript-eslint",
+    "prettier/react"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -38,12 +40,12 @@
     "no-multiple-empty-lines": "off",
     "no-trailing-spaces": "off",
     "padded-blocks": "off",
-		"@typescript-eslint/explicit-function-return-type": [
+    "@typescript-eslint/explicit-function-return-type": [
       "error",
       {
         "allowExpressions": true
       }
-		]    
+    ]
   },
   "settings": {
     "react": {
