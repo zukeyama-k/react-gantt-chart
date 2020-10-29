@@ -1,4 +1,3 @@
-
 export const CELLWIDTH = 30;
 
 export const CHARTMARGIN = 15;

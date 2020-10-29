@@ -17,20 +17,21 @@ const Button = Styled.button`
   font-weight: bold;
 `;
 
-const Paging: React.FC<PagingType> = ({
-  set,
-  value,
-  children
-}) => {
+const Paging: React.FC<PagingType> = ({ set, value, children }) => {
   const context = useContext(Options);
   const [start, end] = value;
 
-
   const prev = (): void => {
-    set([subMonths(start, context.options.showMonth), subMonths(end, context.options.showMonth)]);
+    set([
+      subMonths(start, context.options.showMonth),
+      subMonths(end, context.options.showMonth),
+    ]);
   };
   const next = (): void => {
-    set([addMonths(start, context.options.showMonth), addMonths(end, context.options.showMonth)]);
+    set([
+      addMonths(start, context.options.showMonth),
+      addMonths(end, context.options.showMonth),
+    ]);
   };
   return (
     <div

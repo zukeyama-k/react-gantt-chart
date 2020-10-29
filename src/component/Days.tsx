@@ -28,7 +28,9 @@ const Days: React.FC<DaysType> = ({ days, data }) => {
                     width,
                   }}
                 >
-                {format(month, context.options.headFormat, { locale: context.options.locale})}
+                  {format(month, context.options.headFormat, {
+                    locale: context.options.locale,
+                  })}
                 </Head>
               );
             }

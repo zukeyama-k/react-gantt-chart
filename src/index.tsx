@@ -3,15 +3,12 @@ import * as ReactDOM from 'react-dom';
 import ReactGanttChart from './react-gantt-chart';
 import JapaneseHolidays from 'japanese-holidays';
 import { HeadRowsDataType, Data } from './type/type';
-import ja from  'date-fns/locale/ja';
+import ja from 'date-fns/locale/ja';
 import { isSunday, isToday, isSaturday } from 'date-fns';
-import { 
-  CHART_COLOR,
-  DAY_COLOR
- } from './config';
+import { CHART_COLOR, DAY_COLOR } from './config';
 
 interface DataWidthCssProperties extends Data {
-  customStyle?: React.CSSProperties
+  customStyle?: React.CSSProperties;
 }
 
 interface HeadRowsDataStyleType {
@@ -27,23 +24,49 @@ const products: HeadRowsDataStyleType[] = [
     href: 'http://localhost:3000/companies/nLOeLwtbrqHxrdY7KOMJ/products',
     customClass: 'mmmm',
     data: [
-      { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30), remark: 'テステス', customStyle: { backgroundColor: 'pink'} },
-      { start: new Date(2020, 5, 31), end: new Date(2020, 6, 25), remark: 'テス\nテス\n2888\n88888\n88テステス288\n8888\n\n\n888' },
-      { start: new Date(2020, 6, 3), end: new Date(2020, 8, 30), remark: 'テステス4' },
+      {
+        start: new Date(2020, 3, 29),
+        end: new Date(2020, 4, 30),
+        remark: 'テステス',
+        customStyle: { backgroundColor: 'pink' },
+      },
+      {
+        start: new Date(2020, 5, 31),
+        end: new Date(2020, 6, 25),
+        remark: 'テス\nテス\n2888\n88888\n88テステス288\n8888\n\n\n888',
+      },
+      {
+        start: new Date(2020, 6, 3),
+        end: new Date(2020, 8, 30),
+        remark: 'テステス4',
+      },
     ],
   },
   {
     name: 'test2',
     data: [
-      { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30), remark: 'テregrステス4' },
-      { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12), remark: 'チャート上の期間の表示が短いと切れてしまうので、削除してしまって hover で表示させたいです。' },
+      {
+        start: new Date(2020, 3, 29),
+        end: new Date(2020, 4, 30),
+        remark: 'テregrステス4',
+      },
+      {
+        start: new Date(2020, 4, 31),
+        end: new Date(2020, 5, 12),
+        remark:
+          'チャート上の期間の表示が短いと切れてしまうので、削除してしまって hover で表示させたいです。',
+      },
       { start: new Date(2020, 6, 3), end: new Date(2020, 8, 30) },
     ],
   },
   {
     name: 'test3',
     data: [
-      { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30), remark: 'fffff' },
+      {
+        start: new Date(2020, 3, 29),
+        end: new Date(2020, 4, 30),
+        remark: 'fffff',
+      },
       { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12) },
       { start: new Date(2020, 6, 3), end: new Date(2020, 8, 30) },
     ],
@@ -63,14 +86,14 @@ const option = {
   locale: ja,
   headFormat: 'yyyy年MM月',
   currentFormat: 'yyyy月MM月dd日',
-  getDayColor: (date: Date) :string => {
+  getDayColor: (date: Date): string => {
     if (isToday(date)) return DAY_COLOR.TODAY;
     if (isSunday(date) || JapaneseHolidays.isHoliday(date))
       return DAY_COLOR.HOLIDAY;
     if (isSaturday(date)) return DAY_COLOR.SATURDAY;
     return 'none';
   },
-  getChartColor: (i: number) :string => {
+  getChartColor: (i: number): string => {
     const num: number = i % Object.keys(CHART_COLOR).length;
     switch (num) {
       case 0:
@@ -88,7 +111,7 @@ const option = {
     return 'none';
   },
   getPagingPrevLetter: (month: number) => `${month}ヵ月前`,
-  getPagingNextLetter: (month: number) => `${month}ヵ月後`
+  getPagingNextLetter: (month: number) => `${month}ヵ月後`,
 };
 
 ReactDOM.render(

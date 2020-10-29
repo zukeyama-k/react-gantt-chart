@@ -15,7 +15,9 @@ const Row: React.FC<RowType> = ({
   children,
 }) => {
   const context = useContext(Options);
-  const localize = context.options.locale.localize as { day: (day: number, width: { width: string }) => string };
+  const localize = context.options.locale.localize as {
+    day: (day: number, width: { width: string }) => string;
+  };
 
   return (
     <FlexRow
