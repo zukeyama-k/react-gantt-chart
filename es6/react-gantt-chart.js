@@ -1,10 +1,11 @@
-import React, { useState, createContext, forwardRef, useRef, useEffect } from 'react';
+import React, { useState, createContext, useRef, useEffect, useImperativeHandle, } from 'react';
 import Styled from 'styled-components';
 import { format as formatDate, addMonths } from 'date-fns';
 import HeadRows from './component/HeadRows';
 import Rows from './component/Rows';
 import Days from './component/Days';
 import Paging from './component/Paging';
+import { WrapperTooltips } from './component/WrapperTooltips';
 import en from 'date-fns/locale/en-US';
 import { SHOWMONTH } from './config';
 import { getIntervalDate } from './util';
@@ -32,49 +33,51 @@ const defaultOptions = {
     headFormat: 'yyyy/MM',
     currentFormat: 'yyyy/MM/dd',
     initDate: new Date(),
-    getPagingPrevLetter: (month) => 'prev',
-    getPagingNextLetter: (month) => 'next',
-    getDayColor: (date) => 'none',
-    getChartColor: (i) => 'rgba(0, 0,0 , 0.7)'
+    getPagingPrevLetter: () => 'prev',
+    getPagingNextLetter: () => 'next',
+    getDayColor: () => 'none',
+    getChartColor: () => 'rgba(0, 0,0 , 0.7)',
+    onClick: () => null,
 };
-const Tooltips = (props, ref) => {
-    return (React.createElement("div", { ref: ref, style: {
-            width: '350px',
-            position: 'fixed',
-            padding: '3px 5px',
-            fontSize: '12px',
-            height: 'auto',
-            borderRadius: '3px',
-            boxSizing: 'border-box',
-            backgroundColor: '#fff',
-            boxShadow: "-3px 6px 19px -4px rgba(0, 0, 0, 0.54)"
-        } }));
-};
-const WrapperTooltips = forwardRef(Tooltips);
-const ReactGanttChart = React.memo(({ data, option }) => {
+const ReactGanttChart = React.forwardRef(({ data, option }, ref) => {
     const tooltipRef = useRef(null);
     const products = data;
-    const extendsOptions = Object.assign(Object.assign({}, defaultOptions), option);
-    const initDate = [extendsOptions.initDate, addMonths(extendsOptions.initDate, extendsOptions.showMonth - 1)];
+    const extendsOptions = { ...defaultOptions, ...option };
+    const initDate = [
+        extendsOptions.initDate,
+        addMonths(extendsOptions.initDate, extendsOptions.showMonth - 1),
+    ];
     const [[start, end], setPage] = useState(initDate);
     const context = {
         tooltipRef,
-        options: extendsOptions
+        options: extendsOptions,
     };
     useEffect(() => {
         setPage(initDate);
     }, [data]);
     const intervalDate = getIntervalDate(start, end);
     const intervalManth = intervalDate.reduce((accumulator, currentValue) => {
-        return Object.assign(Object.assign({}, accumulator), { [`${formatDate(currentValue, 'yyyyMM')}`]: currentValue });
+        return {
+            ...accumulator,
+            [`${formatDate(currentValue, 'yyyyMM')}`]: currentValue,
+        };
     }, {});
+    useImperativeHandle(ref, () => ({
+        closeTooltip: () => {
+            if (tooltipRef && tooltipRef.current) {
+                tooltipRef.current.style.display = 'none';
+                tooltipRef.current.innerText = '';
+            }
+        },
+    }));
     return (React.createElement(React.Fragment, null,
         React.createElement(Options.Provider, { value: context },
             React.createElement(Paging, { set: setPage, value: [start, end] },
                 React.createElement("div", null,
                     "\uFF5C",
                     formatDate(intervalDate[0], context.options.currentFormat),
-                    " ~ ",
+                    " ~",
+                    ' ',
                     formatDate(intervalDate[intervalDate.length - 1], context.options.currentFormat),
                     "\uFF5C")),
             React.createElement(GanttChartContainer, null,

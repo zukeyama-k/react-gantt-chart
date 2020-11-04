@@ -14,7 +14,9 @@ const Days = ({ days, data }) => {
                         textAlign: 'center',
                         borderRight: 'solid 1px #dedede',
                         width,
-                    } }, format(month, context.options.headFormat, { locale: context.options.locale })));
+                    } }, format(month, context.options.headFormat, {
+                    locale: context.options.locale,
+                })));
             })),
             React.createElement(Row, { data: data, width: `${data.length * CELLWIDTH}px` }))));
 };
