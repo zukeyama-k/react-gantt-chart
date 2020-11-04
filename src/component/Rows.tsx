@@ -1,48 +1,16 @@
-import React, { useContext, useState } from 'react';
-import { format as formatDate, differenceInCalendarDays } from 'date-fns';
+import React, { useContext } from 'react';
+import { differenceInCalendarDays } from 'date-fns';
 import { CELLWIDTH, CHARTMARGIN } from '../config';
 import Row from './Row';
 import { HeadRowsDataType, Data } from '../type/type';
 import { Options } from '../react-gantt-chart';
+import { Schedule } from './Schedule';
 
 const pointerMargin = 20;
-
-interface ScheduleType {
-  width: string;
-  left: string;
-  remark?: string;
-  customStyle?: React.CSSProperties;
-}
 
 interface DataWidthCssProperties extends Data {
   customStyle?: React.CSSProperties;
 }
-
-const Schedule: React.FC<ScheduleType> = ({
-  width,
-  left,
-  remark = '',
-  customStyle = {},
-}) => {
-  const style: React.CSSProperties = {
-    position: 'absolute',
-    top: '5px',
-    left,
-    width,
-    height: '30px',
-    backgroundColor: '#000',
-    borderRadius: '5px',
-    opacity: '0.7',
-    boxSizing: 'border-box',
-  };
-  return (
-    <div
-      className="chart"
-      data-remark={remark}
-      style={{ ...style, ...customStyle }}
-    ></div>
-  );
-};
 
 interface RowsType {
   intervalDate: Date[];
@@ -82,9 +50,11 @@ const Rows: React.FC<RowsType> = ({ intervalDate, data }) => {
           <div key={i} onMouseMove={onShowTooltips}>
             <Row
               key={i}
+              id={productsData.id}
               data={intervalDate}
               isShowDay={false}
               width={`${intervalDate.length * CELLWIDTH}px`}
+              onClick={context.options.onClick}
             >
               {productsData.data.map(
                 (sale: DataWidthCssProperties, i: number) => {
@@ -93,15 +63,14 @@ const Rows: React.FC<RowsType> = ({ intervalDate, data }) => {
                     firstDay
                   );
                   const endDay = differenceInCalendarDays(sale.end, sale.start);
-                  const remark = sale.remark || '';
-                  const customStyle = sale.customStyle || {};
                   return (
                     <Schedule
                       key={i}
                       width={`${endDay * CELLWIDTH}px`}
                       left={`${startDay * CELLWIDTH + CHARTMARGIN}px`}
-                      remark={remark}
-                      customStyle={customStyle}
+                      remark={sale.remark || ''}
+                      customStyle={sale.customStyle || {}}
+                      dataId={sale.id}
                     ></Schedule>
                   );
                 }

@@ -1,6 +1,6 @@
 {
   "name": "react-gantt-chart",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "none",
   "main": "es6/react-gantt-chart.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "start": "webpack-dev-server --inline --hot",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "format": "prettier --write './src/**/*.{ts,tsx}'",
-    "build:es6": "tsc ./src/react-gantt-chart.tsx --target es6 --outDir es6 --jsx react"
+    "build:es6": "tsc ./src/react-gantt-chart.tsx --target esnext --outDir es6 --jsx react --moduleResolution node --skipLibCheck --esModuleInterop"
   },
   "author": "kazuakizukeyama",
   "license": "ISC",

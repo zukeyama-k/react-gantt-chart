@@ -15,7 +15,7 @@
     "sourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
-    "lib": ["es2017", "dom"]
+    "lib": ["DOM", "ES6"]
   },
-  "include": ["./src/**/*"]
+  "include": ["src/**/*"]
 }

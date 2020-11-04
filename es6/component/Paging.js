@@ -13,10 +13,16 @@ const Paging = ({ set, value, children }) => {
     const context = useContext(Options);
     const [start, end] = value;
     const prev = () => {
-        set([subMonths(start, context.options.showMonth), subMonths(end, context.options.showMonth)]);
+        set([
+            subMonths(start, context.options.showMonth),
+            subMonths(end, context.options.showMonth),
+        ]);
     };
     const next = () => {
-        set([addMonths(start, context.options.showMonth), addMonths(end, context.options.showMonth)]);
+        set([
+            addMonths(start, context.options.showMonth),
+            addMonths(end, context.options.showMonth),
+        ]);
     };
     return (React.createElement("div", { style: { display: 'flex', alignItems: 'center', marginBottom: '10px' } },
         React.createElement(Button, { onClick: prev }, context.options.getPagingPrevLetter(context.options.showMonth)),

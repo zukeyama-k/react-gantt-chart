@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { MouseEvent, useContext } from 'react';
 import { FlexRow, Day } from './utilComponents';
 import { Options } from '../react-gantt-chart';
 
@@ -6,6 +6,8 @@ interface RowType {
   data: Date[];
   isShowDay?: boolean;
   width?: string;
+  id?: string | number;
+  onClick?: (event: MouseEvent<HTMLDivElement>) => void;
 }
 
 const Row: React.FC<RowType> = ({
@@ -13,6 +15,8 @@ const Row: React.FC<RowType> = ({
   isShowDay = true,
   width,
   children,
+  id,
+  onClick,
 }) => {
   const context = useContext(Options);
   const localize = context.options.locale.localize as {
@@ -28,26 +32,31 @@ const Row: React.FC<RowType> = ({
         height: isShowDay ? '50px' : '40px',
       }}
     >
-      <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
-        {data.map((d: Date, i: number) => {
-          const color = context.options.getDayColor(d);
-          return (
-            <Day
-              key={i}
-              style={{ height: isShowDay ? '50px' : '40px', background: color }}
-            >
-              {isShowDay && (
-                <p>
-                  {d.getDate()}
-                  <br />
-                  {localize.day(d.getDay(), { width: 'short' })}
-                </p>
-              )}
-            </Day>
-          );
-        })}
+      <div onClick={onClick} data-id={id}>
+        <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
+          {data.map((d: Date, i: number) => {
+            const color = context.options.getDayColor(d);
+            return (
+              <Day
+                key={i}
+                style={{
+                  height: isShowDay ? '50px' : '40px',
+                  background: color,
+                }}
+              >
+                {isShowDay && (
+                  <p>
+                    {d.getDate()}
+                    <br />
+                    {localize.day(d.getDay(), { width: 'short' })}
+                  </p>
+                )}
+              </Day>
+            );
+          })}
+        </div>
+        {children}
       </div>
-      {children}
     </FlexRow>
   );
 };

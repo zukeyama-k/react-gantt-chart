@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import ReactGanttChart from './react-gantt-chart';
 import JapaneseHolidays from 'japanese-holidays';
-import { HeadRowsDataType, Data } from './type/type';
+import { Data } from './type/type';
 import ja from 'date-fns/locale/ja';
 import { isSunday, isToday, isSaturday } from 'date-fns';
 import { CHART_COLOR, DAY_COLOR } from './config';
@@ -15,6 +15,7 @@ interface HeadRowsDataStyleType {
   name?: string;
   href?: string;
   customClass?: string;
+  id?: string | number;
   data: DataWidthCssProperties[];
 }
 
@@ -23,19 +24,23 @@ const products: HeadRowsDataStyleType[] = [
     name: 'テストテストテストテストテストテストテストテストテストテスト',
     href: 'http://localhost:3000/companies/nLOeLwtbrqHxrdY7KOMJ/products',
     customClass: 'mmmm',
+    id: 1,
     data: [
       {
+        id: 1,
         start: new Date(2020, 3, 29),
         end: new Date(2020, 4, 30),
         remark: 'テステス',
         customStyle: { backgroundColor: 'pink' },
       },
       {
+        id: 2,
         start: new Date(2020, 5, 31),
         end: new Date(2020, 6, 25),
         remark: 'テス\nテス\n2888\n88888\n88テステス288\n8888\n\n\n888',
       },
       {
+        id: 3,
         start: new Date(2020, 6, 3),
         end: new Date(2020, 8, 30),
         remark: 'テステス4',
@@ -44,39 +49,45 @@ const products: HeadRowsDataStyleType[] = [
   },
   {
     name: 'test2',
+    id: 2,
     data: [
       {
+        id: 4,
         start: new Date(2020, 3, 29),
         end: new Date(2020, 4, 30),
         remark: 'テregrステス4',
       },
       {
+        id: 5,
         start: new Date(2020, 4, 31),
         end: new Date(2020, 5, 12),
         remark:
           'チャート上の期間の表示が短いと切れてしまうので、削除してしまって hover で表示させたいです。',
       },
-      { start: new Date(2020, 6, 3), end: new Date(2020, 8, 30) },
+      { id: 6, start: new Date(2020, 6, 3), end: new Date(2020, 8, 30) },
     ],
   },
   {
     name: 'test3',
+    id: 3,
     data: [
       {
+        id: 7,
         start: new Date(2020, 3, 29),
         end: new Date(2020, 4, 30),
         remark: 'fffff',
       },
-      { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12) },
-      { start: new Date(2020, 6, 3), end: new Date(2020, 8, 30) },
+      { id: 8, start: new Date(2020, 4, 31), end: new Date(2020, 5, 12) },
+      { id: 9, start: new Date(2020, 6, 3), end: new Date(2020, 8, 30) },
     ],
   },
   {
     name: 'test4',
+    id: 4,
     data: [
-      { start: new Date(2020, 3, 29), end: new Date(2020, 4, 30) },
-      { start: new Date(2020, 4, 31), end: new Date(2020, 5, 12) },
-      { start: new Date(2020, 6, 3), end: new Date(2020, 8, 30) },
+      { id: 10, start: new Date(2020, 3, 29), end: new Date(2020, 4, 30) },
+      { id: 11, start: new Date(2020, 4, 31), end: new Date(2020, 5, 12) },
+      { id: 12, start: new Date(2020, 6, 3), end: new Date(2020, 8, 30) },
     ],
   },
 ];
@@ -112,6 +123,8 @@ const option = {
   },
   getPagingPrevLetter: (month: number) => `${month}ヵ月前`,
   getPagingNextLetter: (month: number) => `${month}ヵ月後`,
+  onClick: (event: React.MouseEvent<HTMLInputElement>) =>
+    console.log(`${event}テスト`),
 };
 
 ReactDOM.render(

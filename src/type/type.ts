@@ -1,3 +1,5 @@
+import { MouseEvent } from 'react';
+
 export type Locale = {
   code?: string;
   formatDistance?: (...args: Array<any>) => any;
@@ -29,12 +31,18 @@ export type Locale = {
   };
 };
 
-export type Data = { start: Date; end: Date; remark?: string };
+export type Data = {
+  id: number | string;
+  start: Date;
+  end: Date;
+  remark?: string;
+};
 
 export interface HeadRowsDataType {
   name?: string;
   href?: string;
   customClass?: string;
+  id?: string | number;
   data: Data[];
 }
 
@@ -60,6 +68,7 @@ export interface DefaultOptionsType {
   getChartColor: (i: number) => string;
   getPagingPrevLetter: (month: number) => string;
   getPagingNextLetter: (month: number) => string;
+  onClick: (event: MouseEvent<HTMLInputElement>) => void;
 }
 
 export interface Context {
